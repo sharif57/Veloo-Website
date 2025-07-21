@@ -4,44 +4,67 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Logo from "./Logo"
+import Link from "next/link"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  const menus = [
+    {
+      name: "Services",
+      url: "#"
+    },
+    {
+      name: "Prices",
+      url: "#"
+    },
+    {
+      name: "About Us",
+      url: "#"
+    },
+    {
+      name: "Support",
+      url: "#"
+    }
+  ]
+
   return (
     <header className="w-full py-6 ">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-[83%] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between ">
           {/* Logo */}
           <div className="flex items-center gap-20 ">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 cursor-pointer" title="Veloo">
               <Logo />
             </div>
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-[#6B7280] text-lg hover:text-gray-900 font-medium transition-colors">
-                Services
-              </a>
-              <a href="#" className="text-[#6B7280] text-lg hover:text-gray-900 font-medium transition-colors">
-                Prices
-              </a>
-              <a href="#" className="text-[#6B7280] text-lg hover:text-gray-900 font-medium transition-colors">
-                About Us
-              </a>
-              <a href="#" className="text-[#6B7280] text-lg hover:text-gray-900 font-medium transition-colors">
-                Support
-              </a>
+              {
+                menus.map((menu) => (
+                  <Link
+                    key={menu.name}
+                    href={menu.url}
+                    title={menu.name}
+                    className="text-[#6B7280] text-lg hover:text-gray-900 font-medium transition-colors"                  >
+                    {menu.name}
+                  </Link>
+                ))
+              }
+
             </nav>
           </div>
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Button
+              title='Sign In'
               variant="ghost"
               className="text-[#047857] text-lg cursor-pointer bg-[#D1FAE5] hover:text-[#047857] hover:bg-gray-50 font-medium px-6 py-6"
             >
               Sign In
             </Button>
-            <Button className="bg-[#059669] text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors">
+            <Button
+              title='Create free account'
+              className="bg-[#059669] cursor-pointer text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors">
               Create free account
             </Button>
           </div>
