@@ -24,7 +24,7 @@ export function Navbar() {
     },
     {
       name: "Support",
-      url: "#"
+      url: "/support"
     }
   ]
 

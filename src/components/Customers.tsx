@@ -17,38 +17,45 @@ export default function Customers() {
         setIsModalOpen(false);
     };
 
-    const testimonials = [
-        {
-            title: 'Veloo saved me hours each week — quoting is now the easiest part of my job',
-            name: "Sharif Mahamud",
-            image: '/image/users.png'
-        },
-        {
-            title: 'I love that everything is in one place. It’s made my business more organized',
-            name: "John Doe",
-            image: '/image/users.png'
-        },
-        {
-            title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-            name: "Jane Smith",
-            image: '/image/users.png'
-        },
-        {
-            title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-            name: "Jane Smith",
-            image: '/image/users.png'
-        },
-        {
-            title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-            name: "Jane Smith",
-            image: '/image/users.png'
-        },
-        {
-            title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-            name: "Jane Smith",
-            image: '/image/users.png'
-        }
-    ]
+   const testimonials = [
+  {
+    id: 1,
+    title: 'Veloo saved me hours each week — quoting is now the easiest part of my job',
+    name: "Sharif Mahamud",
+    image: '/image/users.png'
+  },
+  {
+    id: 2,
+    title: 'I love that everything is in one place. It’s made my business more organized',
+    name: "John Doe",
+    image: '/image/users.png'
+  },
+  {
+    id: 3,
+    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
+    name: "Jane Smith",
+    image: '/image/users.png'
+  },
+  {
+    id: 4,
+    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
+    name: "Jane Smith",
+    image: '/image/users.png'
+  },
+  {
+    id: 5,
+    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
+    name: "Jane Smith",
+    image: '/image/users.png'
+  },
+  {
+    id: 6,
+    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
+    name: "Jane Smith",
+    image: '/image/users.png'
+  }
+];
+
 
     return (
         <div className=" p-4 container mx-auto">
@@ -59,7 +66,7 @@ export default function Customers() {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 mt-12'>
                     {
                         testimonials.map((testimonial) => (
-                            <div key={testimonial.title} className='bg-white p-6 space-y-5 rounded-2xl'>
+                            <div  key={testimonial.id} className='bg-white p-6 space-y-5 rounded-2xl'>
                                 <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18.845 27.197V19.199C18.845 14.177 20.023 10.085 22.379 6.923C24.797 3.699 28.362 1.591 33.074 0.598997V6.644C30.966 7.14 29.292 8.07 28.052 9.43399C26.812 10.736 26.006 12.317 25.634 14.177H31.214V27.197H18.845ZM0.0589812 27.197V19.199C0.0589812 14.177 1.23698 10.085 3.59298 6.923C6.01098 3.699 9.54498 1.591 14.195 0.598997V6.644C12.087 7.14 10.413 8.07 9.17298 9.43399C7.93298 10.736 7.12698 12.317 6.75498 14.177H12.335V27.197H0.0589812Z" fill="#059669" />
                                 </svg>
