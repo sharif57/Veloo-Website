@@ -253,9 +253,9 @@ export default function HowItWorks() {
 
                                 {/* Center Indicator */}
                                 <div className="relative w-0 flex justify-center">
-                                    <div className="absolute h-8 w-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm font-bold z-10">
+                                    {/* <div className="absolute h-8 w-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm font-bold z-10">
                                         {step.id.toString().padStart(2, '0')}
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {/* Text Side (alternates) */}
