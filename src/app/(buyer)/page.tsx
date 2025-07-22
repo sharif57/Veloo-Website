@@ -1,4 +1,5 @@
 import AllActivity from "@/components/all-activity";
+import Customers from "@/components/Customers";
 import Hero from "@/components/Hero";
 import HowItWorking from "@/components/how-it-working";
 import Plans from "@/components/Plans";
@@ -18,6 +19,8 @@ export default function Home() {
       <AllActivity />
 
       <Plans />
+
+      <Customers />
 
     </div>
   );
