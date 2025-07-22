@@ -1,6 +1,7 @@
 import AllActivity from "@/components/all-activity";
 import Hero from "@/components/Hero";
 import HowItWorking from "@/components/how-it-working";
+import Plans from "@/components/Plans";
 import Services from "@/components/Services";
 
 
@@ -15,6 +16,8 @@ export default function Home() {
       <HowItWorking />
 
       <AllActivity />
+
+      <Plans />
 
     </div>
   );
