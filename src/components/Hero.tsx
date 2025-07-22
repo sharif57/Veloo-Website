@@ -8,7 +8,7 @@ import Icon from './icon';
 export default function Hero() {
   return (
     <div
-      className="container mx-auto rounded-xl p-4 sm:p-6 md:p-8 lg:p-10 relative"
+      className="container mx-auto lg:rounded-xl rounded-none  p-0 sm:p-6 md:p-8 lg:p-10 relative"
       style={{
         backgroundImage: "url('/image/hero.png')",
         backgroundSize: 'cover',
@@ -34,7 +34,8 @@ export default function Hero() {
             Veloo is your smart toolkit for offer generation, task tracking, and customer follow-up — without the back-and-forth
           </p>
           <Button
-            className="bg-[#059669] text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] text-white transition-colors flex items-center justify-center mx-auto lg:mx-0"
+          title="Get Started Now"
+            className="bg-[#059669] cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] text-white transition-colors flex items-center justify-center mx-auto lg:mx-0"
           >
             Get Started Now
             <ArrowRight className="size-5 sm:size-6 ml-2" />
