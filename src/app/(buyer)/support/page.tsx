@@ -12,7 +12,10 @@ interface FormData {
     message: string;
 }
 
+
 export default function Support() {
+
+
     const [formData, setFormData] = useState<FormData>({
         name: '',
         email: '',
