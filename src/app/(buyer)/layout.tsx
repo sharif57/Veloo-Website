@@ -4,6 +4,7 @@ import "../globals.css";
 import { Navbar } from "@/components/Navbar";
 import Footer from "@/components/footer";
 import CookieConsentModal from "@/components/cookie-consent-modal";
+import { Toaster } from "sonner";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -24,12 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={plusJakarta.variable}>
       <body className="antialiased">
- <CookieConsentModal />
+        <CookieConsentModal />
         <Navbar />
 
         {children}
 
         <Footer />
+        <Toaster />
 
       </body>
     </html>

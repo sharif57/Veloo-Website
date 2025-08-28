@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from './ui/button';
+import Link from 'next/link';
 
 export default function Plans() {
   const plans = [
@@ -45,7 +46,8 @@ export default function Plans() {
         {plans.map((plan) => (
           <div
             key={plan.title}
-            className="bg-white p-6 sm:p-10 cursor-pointer hover:bg-[#A7F3D0] hover:duration-1000 rounded-xl shadow-lg flex flex-col min-h-[400px]"
+            title={plan.title}
+            className="bg-white p-6 sm:p-10 cursor-pointer hover:bg-[#A7F3D0] hover:duration-1000 rounded-3xl shadow-lg flex flex-col min-h-[400px]"
             aria-labelledby={`${plan.title}-title`}
           >
 
@@ -78,12 +80,14 @@ export default function Plans() {
                 </li>
               ))}
             </ul>
+            <Link href={'/subscriptions/place-order'} className='cursor-pointer'>
             <Button
-              className="bg-[#059669] text-white  text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] transition-colors mt-16 w-full"
+              className="bg-[#059669] text-white cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] transition-colors mt-16 w-full"
               aria-label={`Choose ${plan.title} Plan`}
             >
               Choose Plan
             </Button>
+            </Link>
           </div>
         ))}
       </div>
