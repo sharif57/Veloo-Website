@@ -62,7 +62,7 @@ export default function Footer() {
                             <h3 className="text-lg font-semibold">Legal</h3>
                             <ul className="space-y-3">
                                 <li>
-                                    <Link href="#" className="text-white/80 hover:text-white transition-colors text-sm md:text-base">
+                                    <Link href="/terms" className="text-white/80 hover:text-white transition-colors text-sm md:text-base">
                                         Terms of Service
                                     </Link>
                                 </li>
@@ -79,33 +79,6 @@ export default function Footer() {
                             </ul>
                         </div>
 
-                        {/* Socials */}
-                        {/* <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Socials</h3>
-              <div className="flex space-x-4">
-                <Link
-                  href="#"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="h-5 w-5" />
-                </Link>
-                <Link
-                  href="#"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                </Link>
-                <Link
-                  href="#"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </Link>
-              </div>
-            </div> */}
 
                         <div className="space-y-4">
                             <h3 className="text-lg font-semibold">Socials</h3>

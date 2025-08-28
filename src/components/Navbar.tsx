@@ -5,9 +5,12 @@ import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Logo from "./Logo"
 import Link from "next/link"
+import AuthModal from "./authModal/authModal"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const [authModalOpen, setAuthModalOpen] = useState(false)
 
   const menus = [
     {
@@ -34,9 +37,9 @@ export function Navbar() {
         <div className="flex items-center justify-between ">
           {/* Logo */}
           <div className="flex items-center gap-20 ">
-            <div className="flex items-center space-x-2 cursor-pointer" title="Veloo">
+            <Link href="/" className="flex items-center space-x-2 cursor-pointer" title="Veloo">
               <Logo />
-            </div>
+            </Link>
             <nav className="hidden md:flex items-center space-x-8">
               {
                 menus.map((menu) => (
@@ -59,9 +62,14 @@ export function Navbar() {
               title='Sign In'
               variant="ghost"
               className="text-[#047857] text-lg cursor-pointer bg-[#D1FAE5] hover:text-[#047857] hover:bg-gray-50 font-medium px-6 py-6"
+              onClick={() => setAuthModalOpen(true)}
+
             >
               Sign In
             </Button>
+            <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+
+
             <Button
               title='Create free account'
               className="bg-[#059669] cursor-pointer text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors">
