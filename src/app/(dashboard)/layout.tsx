@@ -56,14 +56,16 @@ export default function DashboardLayout({
       <body className="antialiased">
         <div className="flex min-h-screen gap-8 bg-[#ECFDF5]">
           {/* Sidebar */}
-          <Sidebar />
+          <div className="w-64 h-screen fixed left-0 top-0">
+            <Sidebar />
+          </div>
 
-          <div className="flex flex-1 flex-col">
+          <div className="lg:ml-72 flex-1 flex-grow">
             {/* Header */}
             <Header title="Dashboard" subtitle="Welcome back, Sharon" />
 
             {/* Main Content */}
-            <main className="flex-1 p-6 ">{children}</main>
+            <main className="p-6 overflow-auto ">{children}</main>
           </div>
         </div>
       </body>
