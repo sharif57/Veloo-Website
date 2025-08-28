@@ -8,10 +8,13 @@ import { Button } from "../ui/button";
 import Apple from "../icon/apple";
 import Microsoft from "../icon/microsoft";
 import Google from "../icon/google";
+import { useRouter } from "next/navigation";
 
 type AuthView = "login" | "signup" | "forgot";
 
 export default function Login({ switchView }: { switchView: (v: AuthView) => void }) {
+
+    const router = useRouter()
 
     const [loading, setLoading] = useState(false)
 
@@ -23,6 +26,7 @@ export default function Login({ switchView }: { switchView: (v: AuthView) => voi
         e.preventDefault()
         try {
             setLoading(true)
+            router.refresh()
         } catch (error) {
             setLoading(false)
         }
@@ -33,10 +37,7 @@ export default function Login({ switchView }: { switchView: (v: AuthView) => voi
         <div className="">
             <div className="w-full max-w-md mx-auto ">
                 <div className="">
-                    {/* Header */}
-                    <div className="text-center ">
-                        <h1 className="text-[48px] font-medium text-[#4B5563] tracking-wide">Sign In</h1>
-                    </div>
+                   
 
                     <form onSubmit={handleSubmit} className="space-y-3">
                         {/* Email Field */}
@@ -88,7 +89,8 @@ export default function Login({ switchView }: { switchView: (v: AuthView) => voi
                         <div className="text-right">
                             <button
                                 type="button"
-                                className="text-sm font-semibold text-emerald-600 hover:text-emerald-700  transition-colors"
+                                className="text-sm font-semibold cursor-pointer text-emerald-600 hover:text-emerald-700  transition-colors"
+                                onClick={() => switchView("forgot")}
                             >
                                 Forget password?
                             </button>
