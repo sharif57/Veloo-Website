@@ -66,7 +66,7 @@ import Logo from "./Logo";
 import DashboardLogo from "./icon/dashboardLogo";
 
 const navigation = [
-  { name: "Dashboard", href: "/demo", icon: LayoutDashboard },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Offers", href: "/offers", icon: Tag },
   { name: "Calendar", href: "/calendar", icon: Calendar },
   { name: "Settings", href: "/settings", icon: Settings },
@@ -112,9 +112,9 @@ export function Sidebar() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-3 rounded-lg px-3 py-3 text-lg font-semibold transition-colors",
                   isActive
-                    ? "bg-[#1e5a42] text-white"
+                    ? "bg-[#D1FAE5] text-[#047857]"
                     : "text-green-100 hover:bg-[#1e5a42] hover:text-white"
                 )}
               >

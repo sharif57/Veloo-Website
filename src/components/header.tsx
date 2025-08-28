@@ -16,12 +16,10 @@ export function Header({ title, subtitle }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon">
-          <Settings className="h-5 w-5" />
-        </Button>
-        <Button variant="ghost" size="icon">
-          <Bell className="h-5 w-5" />
-        </Button>
+   
+        {/* <Button variant="ghost" className="bg-red-50" size="icon"> */}
+          <Bell className="size-6 text-white cursor-pointer"  />
+        {/* </Button> */}
         <Avatar>
           <AvatarImage src="/user-avatar.png" />
           <AvatarFallback>SH</AvatarFallback>

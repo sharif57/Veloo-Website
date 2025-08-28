@@ -201,13 +201,15 @@ export function Navbar() {
               Sign In
             </Button>
             <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
-            <Button
-              title="Create free account"
-              className="bg-[#059669] cursor-pointer text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors"
+            <Link href={'/dashboard'} >
+              <Button
+                title="Create free account"
+                className="bg-[#059669] cursor-pointer text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors"
 
-            >
-              Create free account
-            </Button>
+              >
+                Create free account
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}

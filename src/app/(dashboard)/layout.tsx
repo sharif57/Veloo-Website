@@ -54,7 +54,7 @@ export default function DashboardLayout({
   return (
     <html lang="en" className={plusJakarta.variable}>
       <body className="antialiased">
-        <div className="flex min-h-screen gap-8 bg-gray-50">
+        <div className="flex min-h-screen gap-8 bg-[#ECFDF5]">
           {/* Sidebar */}
           <Sidebar />
 
@@ -63,7 +63,7 @@ export default function DashboardLayout({
             <Header title="Dashboard" subtitle="Welcome back, Sharon" />
 
             {/* Main Content */}
-            <main className="flex-1 p-6">{children}</main>
+            <main className="flex-1 p-6 ">{children}</main>
           </div>
         </div>
       </body>
