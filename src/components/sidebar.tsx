@@ -254,7 +254,7 @@ export function Sidebar() {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed top-0 bottom-0 min-h-screen inset-y-0 left-0 z-40 flex-col bg-[#059669] text-white transition-transform duration-300 ease-in-out md:static md:flex md:translate-x-0",
+          "fixed top-0  bottom-0 min-h-screen inset-y-0 left-0 z-40 flex-col bg-[#059669] text-white transition-transform duration-300 ease-in-out md:static md:flex md:translate-x-0",
           isOpen ? "translate-x-0 w-64" : "-translate-x-full w-64 md:w-64" // Increased width on small devices when open
         )}
       >

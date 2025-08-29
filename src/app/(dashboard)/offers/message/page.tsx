@@ -670,7 +670,7 @@ function ServiceRequestForm({
             </Label>
             <Textarea
               id="taskDescription"
-              valore={formData.taskDescription}
+              value={formData.taskDescription}
               onChange={(e) => handleInputChange("taskDescription", e.target.value)}
               className="min-h-[80px] border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
             />
