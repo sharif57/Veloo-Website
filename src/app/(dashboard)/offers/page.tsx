@@ -1,10 +1,12 @@
-import React from 'react'
+import Offers from "@/components/offers";
 
-export default function page() {
+
+export default function OfferDashboard() {
+
+
   return (
-    <div>
-      jh
-      
-    </div>
+    <>
+      <Offers />
+    </>
   )
 }
