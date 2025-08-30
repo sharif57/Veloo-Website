@@ -32,7 +32,7 @@ export default function Offers() {
                 <title>Offer Dashboard - Task Management</title>
                 <meta name="description" content="Manage and create offers for tasks" />
             </head>
-            <div className="  p-4 sm:p-6 flex items-start justify-start">
+            <div className="  py-4 sm:p-6 flex items-start justify-start">
                 <div className="w-full max-w-4xl">
                     {/* Header with Search and Filter */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
@@ -69,10 +69,10 @@ export default function Offers() {
 
                     {/* Create New Offer Button */}
                     <div className="flex items-center justify-start">
-                        <Link href={'/offers/create-offer'}>
+                        <Link href={'/offers/create-offer'} className='w-full'>
                             <Button
                                 variant="ghost"
-                                className="w-full sm:w-5xl max-w-xs sm:max-w-md bg-white border cursor-pointer text-[#059669] hover:bg-[#d1fae6] rounded-lg p-4 sm:p-36 border-[#059669] text-lg sm:text-xl font-semibold"
+                                className="w-full sm:w-5xl max-w- sm:max-w-md bg-white border cursor-pointer text-[#059669] hover:bg-[#d1fae6] rounded-lg p-4 sm:p-36 border-[#059669] text-lg sm:text-xl font-semibold"
                                 onClick={() => console.log('Create New Offer clicked')}
                             >
                                 + Create New Offer
