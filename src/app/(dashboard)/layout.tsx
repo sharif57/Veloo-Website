@@ -56,7 +56,7 @@ export default function DashboardLayout({
       <body className="antialiased">
         <div className="flex min-h-screen gap-8 bg-[#ECFDF5]">
           {/* Sidebar */}
-          <div className="w-64 h-screen fixed left-0 top-0">
+          <div className="lg:w-64 h-screen fixed left-0 top-0">
             <Sidebar />
           </div>
 
