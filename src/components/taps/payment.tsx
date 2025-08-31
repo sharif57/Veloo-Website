@@ -68,8 +68,7 @@ const invoices = [
 
 export function Payment() {
     return (
-        <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
+        <Table className="border">
             <TableHeader>
                 <TableRow>
                     <TableHead className="">Name</TableHead>
@@ -81,8 +80,8 @@ export function Payment() {
             </TableHeader>
             <TableBody>
                 {invoices.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                        <TableCell className="font-medium">{invoice.invoice}</TableCell>
+                    <TableRow key={invoice.invoice} className="">
+                        <TableCell className="font-medium p-4">{invoice.invoice}</TableCell>
                         <TableCell>{invoice.paymentStatus}</TableCell>
                         <TableCell className="">{invoice.totalAmount}</TableCell>
                         <TableCell className="">{invoice.packageName}</TableCell>
@@ -90,12 +89,7 @@ export function Payment() {
                     </TableRow>
                 ))}
             </TableBody>
-            <TableFooter>
-                <TableRow>
-                    <TableCell colSpan={3}>Total</TableCell>
-                    <TableCell className="text-right">$2,500.00</TableCell>
-                </TableRow>
-            </TableFooter>
+           
         </Table>
     )
 }

@@ -69,7 +69,7 @@ export default function Offers() {
 
                     {/* Create New Offer Button */}
                     <div className="flex items-center justify-start">
-                        <Link href={'/offers/create-offer'} className='w-full'>
+                        <Link href={'/offers/create-offer'} className=''>
                             <Button
                                 variant="ghost"
                                 className="w-full sm:w-5xl max-w- sm:max-w-md bg-white border cursor-pointer text-[#059669] hover:bg-[#d1fae6] rounded-lg p-4 sm:p-36 border-[#059669] text-lg sm:text-xl font-semibold"

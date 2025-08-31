@@ -70,6 +70,8 @@ import { Button } from './ui/button';
 import Project from './taps/project';
 import Image from 'next/image';
 import { Payment } from './taps/payment';
+import Link from 'next/link';
+import Materials from './taps/materials';
 
 export default function Projects() {
     const [isActive, setIsActive] = useState(1);
@@ -78,9 +80,8 @@ export default function Projects() {
     const tabsAndComponents = [
         { id: 1, label: 'Project', content: <Project /> },
         { id: 2, label: 'Quote', content: <Image src="/image/pdf1.png" alt="Quote" height={1000} width={1000} className='w-full' /> },
-        { id: 3, label: 'Communication', content: <div className="p-4">Communication Content</div> },
         { id: 4, label: 'Payment', content: <Payment /> },
-        { id: 5, label: 'Materials', content: <div className="p-4">Materials Content</div> },
+        { id: 5, label: 'Materials', content: <Materials /> },
     ];
 
     return (
@@ -105,6 +106,7 @@ export default function Projects() {
                             {tab.label}
                         </li>
                     ))}
+                    <li><Link href="/offers/message" className="p-4">Message</Link></li>
                 </ul>
                 <div className="mt-4 h-[calc(100%-120px)] overflow-y-auto">
                     {tabsAndComponents.find((tab) => tab.id === isActive)?.content}
