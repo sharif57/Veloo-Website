@@ -1,6 +1,7 @@
-import { Bell, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
+'use client';
+import { Bell } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   title: string;
@@ -8,6 +9,13 @@ interface HeaderProps {
 }
 
 export function Header({ title, subtitle }: HeaderProps) {
+
+  const pathname = usePathname()
+
+  if (pathname === '/offers/message') {
+    return null; // Don't render the header on the dashboard page
+  }
+
   return (
     <div className="flex lg:h-24 h-20 items-center justify-between border-b !bg-[#059669] lg:mt-4 lg:rounded-lg px-6 ">
       <div className="space-y-2">

@@ -1,7 +1,8 @@
+
+
 // "use client"
 
-// import type React from "react"
-
+// import React, { useEffect, useRef } from "react"
 // import { useState } from "react"
 // import { Button } from "@/components/ui/button"
 // import { Card, CardContent } from "@/components/ui/card"
@@ -9,9 +10,9 @@
 // import { Label } from "@/components/ui/label"
 // import { Textarea } from "@/components/ui/textarea"
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-// import { Send } from "lucide-react"
+// import { ArrowUp, Send } from "lucide-react"
 // import { toast } from "sonner"
-// // import { useToast } from "@/hooks/use-toast"
+// import PromptComponent from "@/components/inputs"
 
 // interface FormData {
 //   customerName: string
@@ -24,13 +25,88 @@
 
 // interface ChatMessage {
 //   id: string
-//   text: string
+//   content: string | React.ReactNode // Support both text and JSX
 //   sender: "user" | "support"
 //   timestamp: Date
 // }
 
+// function ChatInput({ onSubmit, placeholder = "Ask me anything about business...", disabled = false }) {
+//   const [inputValue, setInputValue] = useState("");
+//   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+//   // Auto-resize textarea based on content
+//   useEffect(() => {
+//     const textarea = textareaRef.current;
+//     if (textarea) {
+//       textarea.style.height = "auto";
+//       textarea.style.height = `${Math.max(textarea.scrollHeight, 120)}px`;
+//     }
+//   }, [inputValue]);
+
+//   const handleSubmit = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     if (!inputValue.trim() || disabled) return;
+
+//     onSubmit(inputValue.trim());
+//     setInputValue("");
+//   };
+
+//   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+//     if (e.key === "Enter" && !e.shiftKey) {
+//       e.preventDefault();
+//       handleSubmit(new Event("submit") as unknown as React.FormEvent<HTMLFormElement>);
+//     }
+//   };
+
+//   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+//     setInputValue(e.target.value);
+//   };
+
+//   return (
+//     <div className="p-4">
+//       <form onSubmit={handleSubmit} className="relative">
+//         <textarea
+//           ref={textareaRef}
+//           value={inputValue}
+//           onChange={handleInputChange}
+//           onKeyDown={handleKeyDown}
+//           placeholder={placeholder}
+//           disabled={disabled}
+//           className={`
+//             w-full text-black no-scrollbar bg-gradient-to-b bg-white
+//             placeholder-[#62C1BF] rounded-2xl border border-[#62C1BF]
+//             pl-4 pr-12 py-5 resize-none overflow-hidden transition-all duration-200
+//             focus:outline-none focus:ring-2 focus:ring-[#62C1BF] focus:border-[#62C1BF]
+//             disabled:opacity-50 disabled:cursor-not-allowed
+//             scrollbar-none
+//             ${inputValue.length > 200 ? "overflow-y-auto" : "overflow-y-hidden"}
+//           `}
+//           style={{
+//             minHeight: "120px",
+//             maxHeight: "300px",
+//           }}
+//         />
+//         <button
+//           type="submit"
+//           disabled={!inputValue.trim() || disabled}
+//           className={`
+//             absolute right-2 top-1/2 transform -translate-y-1/2
+//             p-2 rounded-full transition-all duration-200 border-none cursor-pointer
+//             ${
+//               !inputValue.trim() || disabled
+//                 ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+//                 : "bg-[#62C1BF] text-[#005163] hover:bg-opacity-80 hover:scale-105 hover:shadow-lg"
+//             }
+//           `}
+//         >
+//           <ArrowUp className="h-4 w-4" />
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
+
 // export default function ServiceRequestPage() {
-//   // const { toast } = useToast()
 //   const [formData, setFormData] = useState<FormData>({
 //     customerName: "John Doe",
 //     address: "34 Elm Street, NY",
@@ -45,7 +121,117 @@
 //   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
 //     {
 //       id: "1",
-//       text:` <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+//       content: (
+//        <Card className="border-[#059669] bg-white backdrop-blur-sm">
+//           <CardContent className="p-6 space-y-6">
+//             {/* <div className="flex items-center gap-2 mb-6">
+//               <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+//               <h1 className="text-xl font-semibold text-gray-900">Service Request</h1>
+//             </div> */}
+
+//             <div className="space-y-4">
+//               <div className="space-y-2">
+//                 <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
+//                   Customer Name
+//                 </Label>
+//                 <Input
+//                   id="customerName"
+//                   value={formData.customerName}
+//                   onChange={(e) => handleInputChange("customerName", e.target.value)}
+//                   className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                 />
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="address" className="text-sm font-medium text-gray-700">
+//                   Address
+//                 </Label>
+//                 <Input
+//                   id="address"
+//                   value={formData.address}
+//                   onChange={(e) => handleInputChange("address", e.target.value)}
+//                   className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                 />
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="taskDescription" className="text-sm font-medium text-gray-700">
+//                   Task Description
+//                 </Label>
+//                 <Textarea
+//                   id="taskDescription"
+//                   value={formData.taskDescription}
+//                   onChange={(e) => handleInputChange("taskDescription", e.target.value)}
+//                   className="min-h-[100px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+//                 />
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="billOfMaterials" className="text-sm font-medium text-gray-700">
+//                   Bill of Materials
+//                 </Label>
+//                 <Textarea
+//                   id="billOfMaterials"
+//                   value={formData.billOfMaterials}
+//                   onChange={(e) => handleInputChange("billOfMaterials", e.target.value)}
+//                   className="min-h-[80px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+//                 />
+//               </div>
+
+//               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//                 <div className="space-y-2">
+//                   <Label htmlFor="time" className="text-sm font-medium text-gray-700">
+//                     Time
+//                   </Label>
+//                   <Input
+//                     id="time"
+//                     value={formData.time}
+//                     onChange={(e) => handleInputChange("time", e.target.value)}
+//                     className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                   />
+//                 </div>
+
+//                 <div className="space-y-2">
+//                   <Label htmlFor="price" className="text-sm font-medium text-gray-700">
+//                     Price
+//                   </Label>
+//                   <Input
+//                     id="price"
+//                     value={formData.price}
+//                     onChange={(e) => handleInputChange("price", e.target.value)}
+//                     className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                   />
+//                 </div>
+//               </div>
+
+//               <Button
+//                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors"
+//               >
+//                 Save Changes
+//               </Button>
+//             </div>
+//           </CardContent>
+//         </Card>
+//       ),
+//       sender: "support",
+//       timestamp: new Date(),
+//     },
+//   ])
+
+//   const [newMessage, setNewMessage] = useState("")
+
+//   const handleInputChange = (field: keyof FormData, value: string) => {
+//     setFormData((prev) => ({
+//       ...prev,
+//       [field]: value,
+//     }))
+//   }
+
+//   const handleSaveChanges = () => {
+//     toast.success("Changes saved successfully")
+//     // Update chat with new form data summary
+//     const summaryCard = (
+//       <Card className="   backdrop-blur-sm">
 //           <CardContent className="p-6 space-y-6">
 //             <div className="flex items-center gap-2 mb-6">
 //               <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
@@ -135,25 +321,17 @@
 //               </Button>
 //             </div>
 //           </CardContent>
-//         </Card>`,
-//       sender: "support",
-//       timestamp: new Date(),
-//     },
-//   ])
-//   console.log(chatMessages)
-
-//   const [newMessage, setNewMessage] = useState("")
-
-//   const handleInputChange = (field: keyof FormData, value: string) => {
-//     setFormData((prev) => ({
+//         </Card>
+//     )
+//     setChatMessages((prev) => [
 //       ...prev,
-//       [field]: value,
-//     }))
-//   }
-
-//   const handleSaveChanges = () => {
-//     // Simulate saving changes
-//     toast.success("Changes saved successfully")
+//       {
+//         id: Date.now().toString(),
+//         content: summaryCard,
+//         sender: "support",
+//         timestamp: new Date(),
+//       },
+//     ])
 //   }
 
 //   const handleSendMessage = () => {
@@ -161,7 +339,7 @@
 
 //     const userMessage: ChatMessage = {
 //       id: Date.now().toString(),
-//       text: newMessage,
+//       content: newMessage,
 //       sender: "user",
 //       timestamp: new Date(),
 //     }
@@ -173,7 +351,98 @@
 //     setTimeout(() => {
 //       const supportMessage: ChatMessage = {
 //         id: (Date.now() + 1).toString(),
-//         text: "Thank you for your message. I'll help you with that right away.",
+//         content: (
+//        <Card className="border-[#059669] backdrop-blur-sm">
+//           <CardContent className="p-6 space-y-6">
+//             {/* <div className="flex items-center gap-2 mb-6">
+//               <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+//               <h1 className="text-xl font-semibold text-gray-900">Service Request</h1>
+//             </div> */}
+
+//             <div className="space-y-4">
+//               <div className="space-y-2">
+//                 <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
+//                   Customer Name
+//                 </Label>
+//                 <Input
+//                   id="customerName"
+//                   value={formData.customerName}
+//                   onChange={(e) => handleInputChange("customerName", e.target.value)}
+//                   className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                 />
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="address" className="text-sm font-medium text-gray-700">
+//                   Address
+//                 </Label>
+//                 <Input
+//                   id="address"
+//                   value={formData.address}
+//                   onChange={(e) => handleInputChange("address", e.target.value)}
+//                   className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                 />
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="taskDescription" className="text-sm font-medium text-gray-700">
+//                   Task Description
+//                 </Label>
+//                 <Textarea
+//                   id="taskDescription"
+//                   value={formData.taskDescription}
+//                   onChange={(e) => handleInputChange("taskDescription", e.target.value)}
+//                   className="min-h-[100px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+//                 />
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="billOfMaterials" className="text-sm font-medium text-gray-700">
+//                   Bill of Materials
+//                 </Label>
+//                 <Textarea
+//                   id="billOfMaterials"
+//                   value={formData.billOfMaterials}
+//                   onChange={(e) => handleInputChange("billOfMaterials", e.target.value)}
+//                   className="min-h-[80px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+//                 />
+//               </div>
+
+//               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//                 <div className="space-y-2">
+//                   <Label htmlFor="time" className="text-sm font-medium text-gray-700">
+//                     Time
+//                   </Label>
+//                   <Input
+//                     id="time"
+//                     value={formData.time}
+//                     onChange={(e) => handleInputChange("time", e.target.value)}
+//                     className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                   />
+//                 </div>
+
+//                 <div className="space-y-2">
+//                   <Label htmlFor="price" className="text-sm font-medium text-gray-700">
+//                     Price
+//                   </Label>
+//                   <Input
+//                     id="price"
+//                     value={formData.price}
+//                     onChange={(e) => handleInputChange("price", e.target.value)}
+//                     className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
+//                   />
+//                 </div>
+//               </div>
+
+//               <Button
+//                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors"
+//               >
+//                 Save Changes
+//               </Button>
+//             </div>
+//           </CardContent>
+//         </Card>
+//       ),
 //         sender: "support",
 //         timestamp: new Date(),
 //       }
@@ -189,17 +458,15 @@
 //   }
 
 //   return (
-//     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 p-4 md:p-6">
-//       <div className="mx-auto max-w-6xl space-y-6">
-//         {/* Service Request Form */}
-
+//     <div className=" p-0 md:p-6">
+//       <div className="mx-auto lg:max-w-5xl space-y-6">
 
 //         {/* Chat Interface */}
-//         <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-//           <CardContent className="p-6">
+//         <Card className=" border-0  bg-none">
+//           <CardContent className="p-6 ">
 //             <div className="space-y-4">
 //               {/* Chat Messages */}
-//               <div className="space-y-3 max-h-screen overflow-y-auto">
+//               <div className="space-y-3 max-h-screen  overflow-y-auto">
 //                 {chatMessages.map((message) => (
 //                   <div
 //                     key={message.id}
@@ -211,26 +478,38 @@
 //                         <AvatarFallback className="bg-emerald-100 text-emerald-700 text-xs">SA</AvatarFallback>
 //                       </Avatar>
 //                     )}
-//                     <div
-//                       className={`max-w-[80%] px-4 py-2 rounded-2xl text-sm ${message.sender === "support"
-//                           ? "bg-emerald-500 text-white rounded-bl-md"
-//                           : "bg-gray-100 text-gray-900 rounded-br-md"
-//                         }`}
-//                     >
-//                       {message.text}
+//                     <div className="lg:max-w-[50%]">
+//                       {typeof message.content === "string" ? (
+//                         <div
+//                           className={`px-4 py-2 rounded-2xl text-sm ${
+//                             message.sender === "support"
+//                               ? "bg-emerald-500 text-white rounded-bl-md"
+//                               : "bg-[#059669] text-white rounded-br-md"
+//                           }`}
+//                         >
+//                           {message.content}
+//                         </div>
+//                       ) : (
+//                         message.content
+//                       )}
 //                     </div>
 //                   </div>
 //                 ))}
 //               </div>
 
-//               {/* Chat Input */}
+// <ChatInput
+//           onSubmit={handleSendMessage}
+//           placeholder="Ask me anything about business..."
+//           // disabled={isLoading || sessionLoading}
+//         />
+//               {/* Chat Input */}  
 //               <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
 //                 <Input
 //                   placeholder="How can I help you?"
 //                   value={newMessage}
 //                   onChange={(e) => setNewMessage(e.target.value)}
 //                   onKeyPress={handleKeyPress}
-//                   className="flex-1 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-full px-4"
+//                   className="flex-1 text-start border-gray-200 py-12 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl px-4"
 //                 />
 //                 <Button
 //                   onClick={handleSendMessage}
@@ -247,34 +526,204 @@
 //     </div>
 //   )
 // }
+"use client";
 
-"use client"
-
-import React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Send } from "lucide-react"
-import { toast } from "sonner"
+import React, { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ArrowUp, Send } from "lucide-react";
+import { toast } from "sonner";
 
 interface FormData {
-  customerName: string
-  address: string
-  taskDescription: string
-  billOfMaterials: string
-  time: string
-  price: string
+  customerName: string;
+  address: string;
+  taskDescription: string;
+  billOfMaterials: string;
+  time: string;
+  price: string;
 }
 
 interface ChatMessage {
-  id: string
-  content: string | React.ReactNode // Support both text and JSX
-  sender: "user" | "support"
-  timestamp: Date
+  id: string;
+  content: string | React.ReactNode;
+  sender: "user" | "support";
+  timestamp: Date;
+}
+
+function ChatInput({
+  onSubmit,
+  placeholder = "Ask me anything about business...",
+  disabled = false,
+}: {
+  onSubmit: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+}) {
+  const [inputValue, setInputValue] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.min(Math.max(textarea.scrollHeight, 48), 120)}px`;
+    }
+  }, [inputValue]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || disabled) return;
+
+    onSubmit(inputValue.trim());
+    setInputValue("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+    }
+  };
+
+  return (
+    <div className="px-4 py-2    ">
+      <form onSubmit={handleSubmit} className="relative">
+        <Textarea
+          ref={textareaRef}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          disabled={disabled}
+          className="
+            w-full text-black  bg-white placeholder-gray-500 rounded-xl border border-gray-300
+            px-4 py-6 resize-none transition-all duration-200
+            focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+            disabled:opacity-50 disabled:cursor-not-allowed
+            scrollbar-hidden
+          "
+          style={{
+            minHeight: "90px",
+            maxHeight: "120px",
+          }}
+        />
+        <Button
+          type="submit"
+          disabled={!inputValue.trim() || disabled}
+          className="
+            absolute right-2 bottom-2 p-2 rounded-full
+            bg-emerald-600 text-white hover:bg-emerald-700
+            disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
+          "
+        >
+          <Send className="h-4 w-4" />
+        </Button>
+      </form>
+    </div>
+  );
+}
+
+function ServiceRequestForm({
+  formData,
+  handleInputChange,
+  handleSaveChanges,
+}: {
+  formData: FormData;
+  handleInputChange: (field: keyof FormData, value: string) => void;
+  handleSaveChanges: () => void;
+}) {
+  return (
+    <Card className="border-emerald-500 bg-white/80 backdrop-blur-sm">
+      <CardContent className="p-4 sm:p-6 space-y-4">
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
+              Customer Name
+            </Label>
+            <Input
+              id="customerName"
+              value={formData.customerName}
+              onChange={(e) => handleInputChange("customerName", e.target.value)}
+              className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="address" className="text-sm font-medium text-gray-700">
+              Address
+            </Label>
+            <Input
+              id="address"
+              value={formData.address}
+              onChange={(e) => handleInputChange("address", e.target.value)}
+              className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="taskDescription" className="text-sm font-medium text-gray-700">
+              Task Description
+            </Label>
+            <Textarea
+              id="taskDescription"
+              valore={formData.taskDescription}
+              onChange={(e) => handleInputChange("taskDescription", e.target.value)}
+              className="min-h-[80px] border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="billOfMaterials" className="text-sm font-medium text-gray-700">
+              Bill of Materials
+            </Label>
+            <Textarea
+              id="billOfMaterials"
+              value={formData.billOfMaterials}
+              onChange={(e) => handleInputChange("billOfMaterials", e.target.value)}
+              className="min-h-[80px] border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="time" className="text-sm font-medium text-gray-700">
+                Time
+              </Label>
+              <Input
+                id="time"
+                value={formData.time}
+                onChange={(e) => handleInputChange("time", e.target.value)}
+                className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="price" className="text-sm font-medium text-gray-700">
+                Price
+              </Label>
+              <Input
+                id="price"
+                value={formData.price}
+                onChange={(e) => handleInputChange("price", e.target.value)}
+                className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
+              />
+            </div>
+          </div>
+
+          <Button
+            onClick={handleSaveChanges}
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg transition-colors"
+          >
+            Save Changes
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 export default function ServiceRequestPage() {
@@ -287,266 +736,77 @@ export default function ServiceRequestPage() {
       "Lorem ipsum dolor sit amet consectetur. Ac turpis ullamcorper lacus tristique pharetra eget erat massa gravida.",
     time: "1.5 hour",
     price: "$200",
-  })
+  });
 
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     {
       id: "1",
-      content: (
-       <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardContent className="p-6 space-y-6">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <h1 className="text-xl font-semibold text-gray-900">Service Request</h1>
-            </div>
-
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
-                  Customer Name
-                </Label>
-                <Input
-                  id="customerName"
-                  value={formData.customerName}
-                  onChange={(e) => handleInputChange("customerName", e.target.value)}
-                  className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address" className="text-sm font-medium text-gray-700">
-                  Address
-                </Label>
-                <Input
-                  id="address"
-                  value={formData.address}
-                  onChange={(e) => handleInputChange("address", e.target.value)}
-                  className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="taskDescription" className="text-sm font-medium text-gray-700">
-                  Task Description
-                </Label>
-                <Textarea
-                  id="taskDescription"
-                  value={formData.taskDescription}
-                  onChange={(e) => handleInputChange("taskDescription", e.target.value)}
-                  className="min-h-[100px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="billOfMaterials" className="text-sm font-medium text-gray-700">
-                  Bill of Materials
-                </Label>
-                <Textarea
-                  id="billOfMaterials"
-                  value={formData.billOfMaterials}
-                  onChange={(e) => handleInputChange("billOfMaterials", e.target.value)}
-                  className="min-h-[80px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="time" className="text-sm font-medium text-gray-700">
-                    Time
-                  </Label>
-                  <Input
-                    id="time"
-                    value={formData.time}
-                    onChange={(e) => handleInputChange("time", e.target.value)}
-                    className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="price" className="text-sm font-medium text-gray-700">
-                    Price
-                  </Label>
-                  <Input
-                    id="price"
-                    value={formData.price}
-                    onChange={(e) => handleInputChange("price", e.target.value)}
-                    className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                  />
-                </div>
-              </div>
-
-              <Button
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors"
-              >
-                Save Changes
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      ),
+      content: <ServiceRequestForm formData={formData} handleInputChange={handleInputChange} handleSaveChanges={handleSaveChanges} />,
       sender: "support",
       timestamp: new Date(),
     },
-  ])
+  ]);
 
-  const [newMessage, setNewMessage] = useState("")
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  }, [chatMessages]);
+
+  function handleInputChange(field: keyof FormData, value: string) {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-    }))
+    }));
   }
 
-  const handleSaveChanges = () => {
-    toast.success("Changes saved successfully")
-    // Update chat with new form data summary
-    const summaryCard = (
-      <Card className="shadow-lg border-0  backdrop-blur-sm">
-          <CardContent className="p-6 space-y-6">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-              <h1 className="text-xl font-semibold text-gray-900">Service Request</h1>
-            </div>
-
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
-                  Customer Name
-                </Label>
-                <Input
-                  id="customerName"
-                  value={formData.customerName}
-                  onChange={(e) => handleInputChange("customerName", e.target.value)}
-                  className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address" className="text-sm font-medium text-gray-700">
-                  Address
-                </Label>
-                <Input
-                  id="address"
-                  value={formData.address}
-                  onChange={(e) => handleInputChange("address", e.target.value)}
-                  className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="taskDescription" className="text-sm font-medium text-gray-700">
-                  Task Description
-                </Label>
-                <Textarea
-                  id="taskDescription"
-                  value={formData.taskDescription}
-                  onChange={(e) => handleInputChange("taskDescription", e.target.value)}
-                  className="min-h-[100px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="billOfMaterials" className="text-sm font-medium text-gray-700">
-                  Bill of Materials
-                </Label>
-                <Textarea
-                  id="billOfMaterials"
-                  value={formData.billOfMaterials}
-                  onChange={(e) => handleInputChange("billOfMaterials", e.target.value)}
-                  className="min-h-[80px] border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="time" className="text-sm font-medium text-gray-700">
-                    Time
-                  </Label>
-                  <Input
-                    id="time"
-                    value={formData.time}
-                    onChange={(e) => handleInputChange("time", e.target.value)}
-                    className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="price" className="text-sm font-medium text-gray-700">
-                    Price
-                  </Label>
-                  <Input
-                    id="price"
-                    value={formData.price}
-                    onChange={(e) => handleInputChange("price", e.target.value)}
-                    className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                  />
-                </div>
-              </div>
-
-              <Button
-                onClick={handleSaveChanges}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors"
-              >
-                Save Changes
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-    )
+  function handleSaveChanges() {
+    toast.success("Changes saved successfully");
     setChatMessages((prev) => [
       ...prev,
       {
         id: Date.now().toString(),
-        content: summaryCard,
+        content: <ServiceRequestForm formData={formData} handleInputChange={handleInputChange} handleSaveChanges={handleSaveChanges} />,
         sender: "support",
         timestamp: new Date(),
       },
-    ])
+    ]);
   }
 
-  const handleSendMessage = () => {
-    if (!newMessage.trim()) return
-
+  function handleSendMessage(message: string) {
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      content: newMessage,
+      content: message,
       sender: "user",
       timestamp: new Date(),
-    }
+    };
 
-    setChatMessages((prev) => [...prev, userMessage])
-    setNewMessage("")
+    setChatMessages((prev) => [...prev, userMessage]);
 
-    // Simulate support response
     setTimeout(() => {
       const supportMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        content: "Thank you for your message. I'll help you with that right away.",
+        content: <ServiceRequestForm formData={formData} handleInputChange={handleInputChange} handleSaveChanges={handleSaveChanges} />,
         sender: "support",
         timestamp: new Date(),
-      }
-      setChatMessages((prev) => [...prev, supportMessage])
-    }, 1000)
-  }
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
-    }
+      };
+      setChatMessages((prev) => [...prev, supportMessage]);
+    }, 1000);
   }
 
   return (
-    <div className=" p-4 md:p-6">
-      <div className="mx-auto max-w-6xl space-y-6">
-
-        {/* Chat Interface */}
-        <Card className=" border-0  ">
-          <CardContent className="p-6 ">
-            <div className="space-y-4">
-              {/* Chat Messages */}
-              <div className="space-y-3 max-h-screen  overflow-y-auto">
+    <div className="flex flex-col min-h-screen ">
+      <div className="flex-1 p- sm:p-6 overflow-hidden">
+        <div className="mx-auto max-w-4xl h-full flex flex-col">
+          <Card className=" backdrop-blur-sm flex-1 flex flex-col">
+            <CardContent className="p-4 sm:p-6 flex-1 flex flex-col">
+              <div
+                ref={chatContainerRef}
+                className="flex-1 space-y-3 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+              >
                 {chatMessages.map((message) => (
                   <div
                     key={message.id}
@@ -554,51 +814,40 @@ export default function ServiceRequestPage() {
                   >
                     {message.sender === "support" && (
                       <Avatar className="w-8 h-8 flex-shrink-0">
-                        <AvatarImage src="/support-agent.png" />
+                        <AvatarImage src="/support-agent.png" alt="Support Agent" />
                         <AvatarFallback className="bg-emerald-100 text-emerald-700 text-xs">SA</AvatarFallback>
                       </Avatar>
                     )}
-                    <div className="max-w-[80%]">
+                    <div className="max-w-[85%] sm:max-w-[70%]">
                       {typeof message.content === "string" ? (
                         <div
-                          className={`px-4 py-2 rounded-2xl text-sm ${
-                            message.sender === "support"
-                              ? "bg-emerald-500 text-white rounded-bl-md"
-                              : "bg-gray-100 text-gray-900 rounded-br-md"
-                          }`}
+                          className={`px-4 py-2 rounded-2xl text-sm ${message.sender === "support"
+                              ? "bg-emerald-500 text-white rounded-bl-none"
+                              : "bg-[#059669] text-white rounded-br-none"
+                            }`}
                         >
                           {message.content}
                         </div>
                       ) : (
                         message.content
                       )}
+                      <div className="text-xs text-gray-500 mt-1 mb-8">
+                        {message.timestamp.toLocaleTimeString()}
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-
-
-              {/* Chat Input */}  
-              <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                <Input
-                  placeholder="How can I help you?"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="flex-1 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-full px-4"
-                />
-                <Button
-                  onClick={handleSendMessage}
-                  size="icon"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full w-10 h-10 flex-shrink-0"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+      <div className="fixed bottom-0 lg:w-[48%] w-[90%] lg:left-[58%] left-[50%] transform -translate-x-1/2 z-10 ">
+        <ChatInput
+          onSubmit={handleSendMessage}
+          placeholder="Ask me anything about business..."
+        />
       </div>
     </div>
-  )
+  );
 }
