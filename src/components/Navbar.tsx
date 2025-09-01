@@ -228,7 +228,7 @@ export function Navbar() {
 
         {/* Mobile Sidebar */}
         {isMenuOpen && (
-          <div className="md:hidden fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white shadow-lg z-50">
+          <div className="md:hidden fixed top-0 right-0 h-full w-4/5 max-w-xs bg-[#059669] text-white shadow-lg z-50">
             <div className="flex flex-col h-full">
               {/* Sidebar Header */}
               <div className="flex justify-between items-center p-4 border-b border-gray-100">
@@ -255,7 +255,7 @@ export function Navbar() {
                     title={menu.name}
                     className={`block px-4 py-2 text-lg font-medium rounded-md transition-colors duration-200 ${pathname === menu.url
                       ? "text-[#059669] bg-[#D1FAE5]"
-                      : "text-gray-600 hover:text-[#059669] hover:bg-[#D1FAE5]"
+                      : "text-white hover:text-[#059669] hover:bg-[#D1FAE5]"
                       }`}
                     onClick={() => setIsMenuOpen(false)}
                   >

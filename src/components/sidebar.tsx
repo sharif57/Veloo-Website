@@ -259,9 +259,9 @@ export function Sidebar() {
         )}
       >
         {/* Logo */}
-        <div className="flex h-16 items-center justify-center mt-16">
+        <Link href="/" className="flex h-16 items-center justify-center mt-16">
           <DashboardLogo />
-        </div>
+        </Link>
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1 px-3 py-4 mt-8">

@@ -13,13 +13,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 
-export default function ChangePassword({ trigger }) {
+interface ChangePasswordProps {
+  trigger: React.ReactNode;
+}
+
+export default function ChangePassword({ trigger }: ChangePasswordProps) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       setError("New password and confirm password do not match.");
