@@ -2,6 +2,7 @@
 import { Bell } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface HeaderProps {
   title: string;
@@ -24,9 +25,11 @@ export function Header({ title, subtitle }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-4">
-   
+
         {/* <Button variant="ghost" className="bg-red-50" size="icon"> */}
-          <Bell className="size-6 text-white cursor-pointer"  />
+        <Link href={'/notifications'}>
+          <Bell className="size-6 text-white cursor-pointer" />
+        </Link>
         {/* </Button> */}
         <Avatar>
           <AvatarImage src="/user-avatar.png" />
