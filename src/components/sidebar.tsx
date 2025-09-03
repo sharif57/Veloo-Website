@@ -212,9 +212,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Tag, Calendar, Settings, LogOut, Menu, X } from "lucide-react";
+import Swal from 'sweetalert2'
 import { Button } from "@/components/ui/button";
 import DashboardLogo from "./icon/dashboardLogo";
 
@@ -226,6 +227,7 @@ const navigation = [
 ];
 
 export function Sidebar() {
+  const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -237,6 +239,25 @@ export function Sidebar() {
   // Check if the current route matches the item href or is a child route
   const isRouteActive = (href: string) => {
     return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  const handleLogOut = () => {
+    Swal.fire({
+      text: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonText: "     Sure    ",
+      cancelButtonText: "Cancel",
+      showConfirmButton: true,
+      confirmButtonColor: "#DC2626",
+      reverseButtons: true,
+    }).then((res) => {
+      if (res.isConfirmed) {
+        // dispatch(logout());
+        localStorage.removeItem("accessToken");
+        // localStorage.removeItem("user-update");
+        router.push("/");
+      }
+    });
   };
 
   return (
@@ -290,7 +311,10 @@ export function Sidebar() {
         <div className="border-t border-green-600 p-3">
           <button
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-green-100 transition-colors hover:bg-[#1e5a42] hover:text-white"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              handleLogOut();
+            }}
           >
             <LogOut className="h-5 w-5" />
             Log Out

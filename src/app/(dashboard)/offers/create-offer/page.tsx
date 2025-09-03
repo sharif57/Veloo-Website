@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link';
 
 export default function OfferForm() {
   const [formData, setFormData] = useState({
@@ -119,12 +120,14 @@ export default function OfferForm() {
             </div>
 
             {/* Generate Offer Button */}
-            <Button
-              type="submit"
-              className="w-full bg-[#059669] text-white hover:bg-[#047857] rounded-lg p-2 sm:p-6     text-sm sm:text-base font-semibold"
-            >
-              Generate Offer
-            </Button>
+            <Link href={'/offers/message'}>
+              <Button
+                type="submit"
+                className="w-full bg-[#059669] text-white hover:bg-[#047857] rounded-lg p-2 sm:p-6     text-sm sm:text-base font-semibold"
+              >
+                Generate Offer
+              </Button>
+            </Link>
           </form>
         </div>
       </div>

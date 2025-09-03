@@ -156,8 +156,8 @@ export function Navbar() {
   const pathname = usePathname()
 
   const menus = [
-    { name: "Services", url: "/services" },
-    { name: "Prices", url: "/prices" },
+    { name: "Services", url: "/#" },
+    { name: "Prices", url: "/#" },
     { name: "About Us", url: "/about" },
     { name: "Support", url: "/support" },
     // { name: "Subscriptions", url: "/subscriptions" },
