@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import Link from 'next/link';
 
-export default function Plans() {
+export default function  Plans() {
   const plans = [
     {
       title: 'Basic',
@@ -38,7 +38,7 @@ export default function Plans() {
   ];
 
   return (
-    <div className="container mx-auto p-4">
+    <div id="prices" className="container mx-auto p-4">
       <h1 className="text-4xl sm:text-5xl md:text-6xl w-full sm:w-1/2 mx-auto leading-tight font-semibold text-[#4B5563] text-center">
         Affordable Plans for Service Providers
       </h1>

@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import Icon from './icon';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -20,7 +21,7 @@ export default function Hero() {
         alignItems: 'center'
       }}
     >
-      <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full gap-6">
+      <div  className="flex flex-col lg:flex-row justify-between items-center w-full h-full gap-6">
         <div className="lg:w-1/2 space-y-4 md:space-y-6 text-center lg:text-left relative">
           {/* SVG positioned absolutely relative to the text container */}
           <div className="absolute right-0 top-[-20px] sm:top-[-30px] md:top-[-40px] lg:top-[-10px]">
@@ -33,13 +34,15 @@ export default function Hero() {
           <p className="text-lg sm:text-xl md:text-2xl font-medium text-[#4B5563]">
             Veloo is your smart toolkit for offer generation, task tracking, and customer follow-up — without the back-and-forth
           </p>
-          <Button
-          title="Get Started Now"
-            className="bg-[#059669] cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] text-white transition-colors flex items-center justify-center mx-auto lg:mx-0"
-          >
-            Get Started Now
-            <ArrowRight className="size-5 sm:size-6 ml-2" />
-          </Button>
+          <Link id="services" href={'/dashboard'}>
+            <Button
+              title="Get Started Now"
+              className="bg-[#059669] cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] text-white transition-colors flex items-center justify-center mx-auto lg:mx-0"
+            >
+              Get Started Now
+              <ArrowRight className="size-5 sm:size-6 ml-2" />
+            </Button>
+          </Link>
         </div>
         <div className="lg:w-1/2 flex justify-center lg:justify-end">
           <Image
