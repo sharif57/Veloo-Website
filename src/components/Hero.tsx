@@ -15,7 +15,7 @@ export default function Hero() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         width: '100%',
-        minHeight: '70vh', // Use viewport height for better scaling
+        minHeight: '70vh', 
         display: 'flex',
         height: '750px',
         alignItems: 'center'
@@ -23,7 +23,6 @@ export default function Hero() {
     >
       <div  className="flex flex-col lg:flex-row justify-between items-center w-full h-full gap-6">
         <div className="lg:w-1/2 space-y-4 md:space-y-6 text-center lg:text-left relative">
-          {/* SVG positioned absolutely relative to the text container */}
           <div className="absolute right-0 top-[-20px] sm:top-[-30px] md:top-[-40px] lg:top-[-10px]">
             <Icon />
           </div>
