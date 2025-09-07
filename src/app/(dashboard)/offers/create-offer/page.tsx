@@ -48,6 +48,7 @@ export default function OfferForm() {
                 onChange={handleChange}
                 placeholder="Enter customer name"
                 className="mt-1 w-full p-2 sm:p-3 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] text-sm sm:text-base"
+                required
               />
             </div>
 
@@ -64,6 +65,7 @@ export default function OfferForm() {
                 onChange={handleChange}
                 placeholder="Enter phone number"
                 className="mt-1 w-full p-2 sm:p-3 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] text-sm sm:text-base"
+                required
               />
             </div>
 
@@ -80,6 +82,7 @@ export default function OfferForm() {
                 onChange={handleChange}
                 placeholder="Enter address"
                 className="mt-1 w-full p-2 sm:p-3 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] text-sm sm:text-base"
+                required
               />
             </div>
 
@@ -94,10 +97,14 @@ export default function OfferForm() {
                 value={formData.projectStart}
                 onChange={handleChange}
                 className="mt-1 w-full p-2 sm:p-3 border bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] text-sm sm:text-base"
+                required
               >
                 <option value="ASAP">ASAP</option>
-                <option value="2025-09-01">2025-09-01</option>
-                <option value="2025-09-15">2025-09-15</option>
+                <option value="2025-09-01">1-3 Weeks</option>
+                <option value="2025-09-15">3 months</option>
+                <option value="2025-09-15">6 months</option>
+                <option value="2025-09-15">1 year</option>
+                <option value="2025-09-15">Other</option>
               </select>
             </div>
 
@@ -112,18 +119,24 @@ export default function OfferForm() {
                 value={formData.task}
                 onChange={handleChange}
                 className="mt-1 w-full p-2 sm:p-3 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#059669] text-sm sm:text-base"
+                required
               >
                 <option value="Windows/doors">Windows/doors</option>
-                <option value="Plumbing">Plumbing</option>
-                <option value="Electrical">Electrical</option>
+                <option value="Plumbing">Garage</option>
+                <option value="Electrical">Isolation</option>
+                <option value="Electrical">Roofine</option>
+                <option value="Electrical">Flooring</option>
+                <option value="Electrical">House extension</option>
+                <option value="Electrical">Kitchen</option>
               </select>
             </div>
 
             {/* Generate Offer Button */}
             <Link href={'/offers/message'}>
+            {/* <Link href={'/offers/projects'}> */}
               <Button
                 type="submit"
-                className="w-full bg-[#059669] text-white hover:bg-[#047857] rounded-lg p-2 sm:p-6     text-sm sm:text-base font-semibold"
+                className="w-full bg-[#059669] text-white hover:bg-[#047857] rounded-lg p-2 sm:p-6 text-sm sm:text-base font-semibold"
               >
                 Generate Offer
               </Button>

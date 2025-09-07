@@ -6,9 +6,9 @@ export default function OfferDashboard() {
 
 
   return (
-    <>
+    <div >
       <Offers />
-      <Project/>
-    </>
+      {/* <Project/> */}
+    </div>
   )
 }

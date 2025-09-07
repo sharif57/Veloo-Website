@@ -13,7 +13,7 @@ export function Header({ title, subtitle }: HeaderProps) {
 
   const pathname = usePathname()
 
-  if (pathname === '/offers/message') {
+  if (pathname === '/offers/message' || pathname === '/offers' || pathname === '/offers/create-offer' || pathname === '/offers/projects') {
     return null; // Don't render the header on the dashboard page
   }
 
