@@ -121,9 +121,10 @@ function ServiceRequestForm({
             </Label>
             <Input
               id="customerName"
-              value={formData.customerName}
+              defaultValue={formData.customerName}
               onChange={(e) => handleInputChange("customerName", e.target.value)}
               className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
+              
             />
           </div>
 
@@ -133,7 +134,7 @@ function ServiceRequestForm({
             </Label>
             <Input
               id="address"
-              value={formData.address}
+              defaultValue={formData.address}
               onChange={(e) => handleInputChange("address", e.target.value)}
               className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
             />
@@ -145,7 +146,7 @@ function ServiceRequestForm({
             </Label>
             <Textarea
               id="taskDescription"
-              value={formData.taskDescription}
+              defaultValue={formData.taskDescription}
               onChange={(e) => handleInputChange("taskDescription", e.target.value)}
               className="min-h-[80px] border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
             />
@@ -157,7 +158,7 @@ function ServiceRequestForm({
             </Label>
             <Textarea
               id="billOfMaterials"
-              value={formData.billOfMaterials}
+              defaultValue={formData.billOfMaterials}
               onChange={(e) => handleInputChange("billOfMaterials", e.target.value)}
               className="min-h-[80px] border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
             />
@@ -170,7 +171,7 @@ function ServiceRequestForm({
               </Label>
               <Input
                 id="time"
-                value={formData.time}
+                defaultValue={formData.time}
                 onChange={(e) => handleInputChange("time", e.target.value)}
                 className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
               />
@@ -182,7 +183,7 @@ function ServiceRequestForm({
               </Label>
               <Input
                 id="price"
-                value={formData.price}
+                defaultValue={formData.price}
                 onChange={(e) => handleInputChange("price", e.target.value)}
                 className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
               />

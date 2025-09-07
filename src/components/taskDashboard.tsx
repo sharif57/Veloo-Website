@@ -265,6 +265,7 @@ import {
   DialogClose,
 } from '@/components/ui/dialog' // Import Dialog components from shadcn/ui
 import Filter from './icon/filter'
+import Link from 'next/link'
 
 interface Task {
   id: string
@@ -577,50 +578,57 @@ function TaskCard({ task, onViewOffer }: { task: Task; onViewOffer: () => void }
             {task.totalPrice}
           </span>
         </div>
-        <div className="flex flex-col sm:flex-row gap-4 pt-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex-1 gap-2 text-[#047857] font-semibold py-4 sm:py-6 bg-[#D1FAE5] hover:text-white hover:bg-[#047857]"
-            onClick={onViewOffer}
-          >
-            View Offer
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex-1 gap-2 text-[#ffffff] font-semibold py-4 sm:py-6 bg-[#059669] hover:bg-[#047857] hover:text-white"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 25 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 sm:w-5 sm:h-5"
-            >
-              <path
-                d="M2 12.5L6.07574 16.5757C6.31005 16.8101 6.68995 16.8101 6.92426 16.5757L9.5 14"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M16.5 7L12.5 11"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M7.5 12L12.0757 16.5757C12.3101 16.8101 12.6899 16.8101 12.9243 16.5757L22.5 7"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            Completed
-          </Button>
-        </div>
+       <div className="flex flex-col sm:flex-row gap-4 pt-4">
+  {/* View Offer Button */}
+  <Link href={'/offers/projects'} className="flex-1">
+    <Button
+      variant="ghost"
+      size="sm"
+      className="w-full gap-2 text-[#047857] font-semibold py-4 sm:py-6 bg-[#D1FAE5] hover:text-white hover:bg-[#047857]"
+    >
+      View Offer
+    </Button>
+  </Link>
+
+  {/* Completed Button */}
+  <div className="flex-1">
+    <Button
+      variant="ghost"
+      size="sm"
+      className="w-full gap-2 text-[#ffffff] font-semibold py-4 sm:py-6 bg-[#059669] hover:bg-[#047857] hover:text-white"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 25 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-4 h-4 sm:w-5 sm:h-5"
+      >
+        <path
+          d="M2 12.5L6.07574 16.5757C6.31005 16.8101 6.68995 16.8101 6.92426 16.5757L9.5 14"
+          stroke="white"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M16.5 7L12.5 11"
+          stroke="white"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M7.5 12L12.0757 16.5757C12.3101 16.8101 12.6899 16.8101 12.9243 16.5757L22.5 7"
+          stroke="white"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </svg>
+      Completed
+    </Button>
+  </div>
+</div>
+
       </CardContent>
     </Card>
   )
