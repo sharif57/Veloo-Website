@@ -124,7 +124,6 @@ function ServiceRequestForm({
               defaultValue={formData.customerName}
               onChange={(e) => handleInputChange("customerName", e.target.value)}
               className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
-              
             />
           </div>
 
