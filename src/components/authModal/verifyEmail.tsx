@@ -3,33 +3,48 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import { useSelector } from "react-redux";
+import { useResendOtpMutation, useVerifyEmailMutation } from "@/redux/feature/authSlice";
+import { toast } from "sonner";
 type AuthView = "login" | "signup" | "forgot" | "verify" | "reset";
 
 
 export default function EmailVerificationForm({ switchView }: { switchView: (v: AuthView) => void }) {
-    const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [value, setValue] = useState("")
+  // const dispatch = useDispatch();
+  const [verifyEmail] = useVerifyEmailMutation();
+  const [resendOtp] = useResendOtpMutation();
 
-  const handleVerify = () => {
+  const email = useSelector((state: any) => state.authUI.verifyEmail);
+  console.log(email, 'verifyemailddddddddd')
+  const handleVerify = async () => {
     console.log("Verification code:", value)
-     try {
-        setLoading(true)
-        switchView("reset")
-    } catch (error) {
-        setLoading(false)
+    setLoading(true)
+    try {
+      const res = await verifyEmail({ otp: value }).unwrap()
+      toast.success(res?.message || "Email verified successfully!")
+      setLoading(false)
+      switchView("login")
+    } catch (error: any) {
+      toast.error(error?.data?.errors?.otp?.[0] || error?.data?.message || "Verification failed. Please try again.")
+      setLoading(false)
     }
-    // Handle verification logic here
   }
 
-  const handleResend = () => {
-    console.log("Resending verification code...")
-   
-    // Handle resend logic here
+  const handleResend = async () => {
+    try {
+      const res = await resendOtp({ email }).unwrap();
+      toast.success(res?.message || "OTP resent successfully!")
+    } catch (error) {
+      toast.error("Failed to resend OTP. Please try again.")
+    }
+
   }
 
   return (
     <div className=" ">
-      
+
 
       <div className="mb-8">
         <div className="flex justify-center mb-6">

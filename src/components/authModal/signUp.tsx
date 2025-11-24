@@ -7,10 +7,17 @@ import { Button } from '../ui/button';
 import Apple from '../icon/apple';
 import Google from '../icon/google';
 import Microsoft from '../icon/microsoft';
-type AuthView = "login" | "signup" | "forgot";
+import { useRegisterMutation } from '@/redux/feature/authSlice';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setVerifyEmail } from '@/redux/feature/authUISlice';
+type AuthView = "login" | "signup" | "forgot" | 'verify';
 
 export default function SignUp({ switchView }: { switchView: (v: AuthView) => void }) {
+    const router = useRouter();
 
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
 
     const [showPassword, setShowPassword] = useState(false)
@@ -20,23 +27,66 @@ export default function SignUp({ switchView }: { switchView: (v: AuthView) => vo
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        try {
-            setLoading(true)
-        } catch (error) {
-            setLoading(false)
+    const [register] = useRegisterMutation();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        if (password !== confirmPassword) {
+            toast.error("Passwords do not match!");
+            return;
         }
-        // Handle sign in logic here
-        console.log("Sign in attempt:", { email, password })
-    }
+
+        try {
+            const res: any = await register({
+                full_name: name,
+                email,
+                password,
+                confirm_password: confirmPassword,
+            }).unwrap();
+
+            toast.success(res?.message || "Account created successfully!");
+
+            // Save email in Redux store
+            dispatch(setVerifyEmail(email));
+
+            // Switch to verify view
+            switchView("verify");
+        } catch (error: any) {
+            toast.error( error?.data?.errors?.email?.[0] || error?.data?.message || "Account creation failed!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault()
+    //     setLoading(true)
+    //     if (password !== confirmPassword) {
+    //         toast.error('Passwords do not match!')
+    //         return;
+    //     }
+    //     try {
+    //         const res = await register({ full_name: name, email, password, confirm_password: confirmPassword }).unwrap();
+    //         console.log(res, 'register')
+    //         toast.success(res?.message || 'Account created successfully!')
+    //         // router.push(switchView('verify'));
+    //         switchView("verify", { email });
+    //     } catch (error: any) {
+    //         toast.error(error?.message || 'Account creation failed!')
+    //         setLoading(false)
+    //     }
+    //     // Handle sign in logic here
+    //     console.log("Sign in attempt:", { email, password })
+    // }
 
     return (
         <div>
-            <div className="">
+            <div className=" overflow-y-auto h-[70vh]">
                 <div className="w-full max-w-md mx-auto ">
                     <div className="">
-                     
+
 
                         <form onSubmit={handleSubmit} className="space-y-3">
                             {/* Email Field */}
@@ -101,7 +151,7 @@ export default function SignUp({ switchView }: { switchView: (v: AuthView) => vo
                                 </div>
                             </div>
 
-                             {/* Confirm Password Field */}
+                            {/* Confirm Password Field */}
                             <div className="space-y-2">
                                 <Label htmlFor="confirm-password" className="text-lg font-semibold text-[#374151]">
                                     Confirm Password
@@ -127,9 +177,9 @@ export default function SignUp({ switchView }: { switchView: (v: AuthView) => vo
                                 </div>
                             </div>
 
-                        
 
-                           
+
+
 
                             {/* Sign In Button */}
                             <Button
@@ -183,7 +233,7 @@ export default function SignUp({ switchView }: { switchView: (v: AuthView) => vo
                             {/* Sign Up Link */}
                             <div className="text-center mt-8">
                                 <span className="text-gray-600 text-sm">
-                                  Already have account?{" "}
+                                    Already have account?{" "}
                                     <button onClick={() => switchView("login")} type="button" className="text-emerald-600 hover:text-emerald-700 cursor-pointer font-semibold transition-colors">
                                         Sign In
                                     </button>

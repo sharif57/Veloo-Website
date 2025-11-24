@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://10.10.12.111:8001/api",
+    baseUrl: "http://10.10.12.111:8001/v1",
     // baseUrl: "https://enitiative.org/api",
-    baseUrl: "https://api.enitiative.org/api",
+    // baseUrl: "https://api.enitiative.org/api",
     // prepareHeaders: (headers) => {
     //   const token = localStorage.getItem("accessToken");
 

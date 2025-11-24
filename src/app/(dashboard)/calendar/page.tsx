@@ -100,7 +100,7 @@ export default function Calendars() {
                                         <button
                                             key={slot}
                                             onClick={() => handleSlotSelect(slot)}
-                                            className={'bg-[#D1FAE5] py-4 px-2 text-lg font-semibold text-[#047857] rounded-lg cursor-pointer hover:bg-opacity-30 transition-colors duration-300 ' + (selectedSlot === slot ? 'bg-[#e0faef] ' : '')}
+                                            className={'bg-[#D1FAE5] py-4 px-2   text-lg font-semibold text-[#047857] rounded-lg cursor-pointer hover:bg-opacity-30 transition-colors duration-300 ' + (selectedSlot === slot ? 'bg-[#e0faef] ' : '')}
                                         >
                                             {slot}
                                         </button>

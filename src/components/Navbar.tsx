@@ -167,11 +167,24 @@ import Logo from "./Logo"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import AuthModal from "./authModal/authModal"
+import { useUserProfileQuery } from "@/redux/feature/userSlice"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const pathname = usePathname()
+
+  const { data } = useUserProfileQuery(undefined);
+  console.log(data)
 
   const menus = [
     { name: "Services", url: "#services" },
@@ -216,25 +229,58 @@ export function Navbar() {
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Button
-              title="Sign In"
-              variant="ghost"
-              className="text-[#047857] text-lg cursor-pointer bg-[#D1FAE5] hover:text-[#047857] hover:bg-gray-50 font-medium px-6 py-6"
-              onClick={() => setAuthModalOpen(true)}
-            >
-              Sign In
-            </Button>
-            <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
-            <Link href={'/dashboard'}>
-              <Button
-                title="Create free account"
-                className="bg-[#059669] cursor-pointer text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors"
-              >
-                Create free account
-              </Button>
-            </Link>
-          </div>
+          {
+            data?.data ? (
+              <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar className="size-10">
+                      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    {/* <Avatar className="rounded-lg">
+                      <AvatarImage
+                        src="https://github.com/evilrabbit.png"
+                        alt="@evilrabbit"
+                      />
+                      <AvatarFallback>ER</AvatarFallback>
+                    </Avatar> */}
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Billing</DropdownMenuItem>
+                    <DropdownMenuItem>Team</DropdownMenuItem>
+                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <div>
+                <div className="hidden md:flex items-center space-x-4">
+                  <Button
+                    title="Sign In"
+                    variant="ghost"
+                    className="text-[#047857] text-lg cursor-pointer bg-[#D1FAE5] hover:text-[#047857] hover:bg-gray-50 font-medium px-6 py-6"
+                    onClick={() => setAuthModalOpen(true)}
+                  >
+                    Sign In
+                  </Button>
+                  <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+                  <Link href={'/dashboard'}>
+                    <Button
+                      title="Create free account"
+                      className="bg-[#059669] cursor-pointer text-lg hover:bg-[#059669] text-white font-medium px-6 py-6 rounded-md transition-colors"
+                    >
+                      Create free account
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            )
+
+          }
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">

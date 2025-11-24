@@ -7,21 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, MapPin, User, Package, Clock, DollarSign, Clock3 } from 'lucide-react'
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
-import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogClose,
 } from '@/components/ui/dialog' 
-import Filter from './icon/filter'
 import Link from 'next/link'
 
 interface Task {
@@ -64,20 +55,7 @@ const mockTasks: Task[] = [
   },
 ]
 
-const sidebarItems = [
-  { label: "Today's Task", active: true },
-  { label: 'Upcoming Tasks', active: false },
-  { label: 'Ongoing Tasks', active: false },
-  { label: 'New Tasks', active: false },
-]
 
-const filterOptions = [
-  { label: 'All', value: 'all' },
-  { label: 'Upcoming June-After July', value: 'Upcoming June-After July' },
-  { label: 'Ongoing', value: 'Ongoing' },
-  { label: 'Materials Ordered', value: 'materialsOrdered' },
-  { label: 'Completed', value: 'completed' },
-]
 
 export default function TaskDashboard() {
   const [activeSection, setActiveSection] = useState("Today's Task")
@@ -112,30 +90,7 @@ export default function TaskDashboard() {
             <h1 className="text-2xl sm:text-3xl font-semibold text-[#4B5563] mt-8 sm:mt-0">
               {activeSection}
             </h1>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-2 border-[#10B981] bg-[#d1fae6] text-lg text-[#059669] font-semibold py-4 sm:py-5 px-4 sm:px-6"
-                >
-                  <Filter />
-                  Filter
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Filter Tasks</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {filterOptions.map((option) => (
-                  <DropdownMenuItem
-                    key={option.value}
-                    onClick={() => setSelectedFilter(option.value)}
-                  >
-                    {option.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+          
           </div>
 
           {/* Task Grid */}

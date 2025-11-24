@@ -4,6 +4,9 @@ import { Label } from '../ui/label';
 import { Eye, EyeOff, Lock } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useSelector } from 'react-redux';
+import { useResetPasswordMutation } from '@/redux/feature/authSlice';
+import { toast } from 'sonner';
 type AuthView = "login" | "signup" | "forgot" | "verify" | "reset";
 
 export default function ResetPassword({ switchView }: { switchView: (view: AuthView) => void }) {
@@ -14,17 +17,29 @@ export default function ResetPassword({ switchView }: { switchView: (view: AuthV
 
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [resetPassword] = useResetPasswordMutation();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const email = useSelector((state: any) => state.authUI.verifyEmail);
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
+        if (password !== confirmPassword) {
+            toast.error("Passwords do not match. Please try again.")
+            setLoading(false)
+            return;
+        }
         try {
-            setLoading(true)
+            const res = await resetPassword({ new_password: password, confirm_password: confirmPassword }).unwrap();
+            console.log(res, '=================>>>>>.')
+            toast.success(res?.message || "Password reset successfully!")
+            localStorage.removeItem("resetToken");
+            setLoading(false)
             switchView("login")
-        } catch (error) {
+        } catch (error: any) {
+            toast.error(error?.data?.errors?.password?.[0] || error?.data?.message || "Password reset failed. Please try again.")
             setLoading(false)
         }
         // Handle sign in logic here
-        console.log("Sign in attempt:", { password, confirmPassword })
     }
 
     return (

@@ -4,26 +4,33 @@ import { Label } from '../ui/label';
 import { Mail } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useForgotPasswordMutation } from '@/redux/feature/authSlice';
+import { toast } from 'sonner';
 
-type AuthView = "login" | "signup" | "forgot" | "verify";
+type AuthView = "login" | "signup" | "forgot" | "verify" | 'resetOtp';
 
 export default function ForgotPassword({ switchView }: { switchView: (v: AuthView) => void }) {
     const [email, setEmail] = React.useState("")
     const [loading, setLoading] = React.useState(false)
+    const [forgotPassword] = useForgotPasswordMutation();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            const res = await forgotPassword({ email }).unwrap();
+            toast.success(res?.message || "OTP sent successfully!")
             setLoading(false)
-            switchView("verify")
-        }, 2000)
+            switchView("resetOtp")
+        } catch (error: any) {
+            toast.error(error?.data?.errors?.email?.[0] ||error?.data?.message || "Failed to send OTP. Please try again.")
+            setLoading(false)
+        }
     }
 
     return (
         <div>
-            
+
             <div className="space-y-4 mt-6">
                 <div className="space-y-2">
                     <Label htmlFor="email" className="text-lg font-semibold text-[#374151]">

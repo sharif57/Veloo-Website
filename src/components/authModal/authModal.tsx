@@ -1,14 +1,4 @@
-// import React from 'react'
 
-// export default function Login() {
-//   return (
-//     <div>
-//       <h1>login</h1>
-//     </div>
-//   )
-// }
-
-// components/AuthModal.tsx
 "use client";
 
 import { useState } from "react";
@@ -18,8 +8,9 @@ import SignUp from "./signUp";
 import ForgotPassword from "./forgot";
 import VerifyEmail from "./verifyEmail";
 import ResetPassword from "./resetPassword";
+import ResetPasswordOtp from "./resetOtp";
 
-type AuthView = "login" | "signup" | "forgot" | "verify" | "reset";
+type AuthView = "login" | "signup" | "forgot" | "verify" | "reset" | '/' | 'resetOtp';
 
 export default function AuthModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [view, setView] = useState<AuthView>("login");
@@ -33,6 +24,7 @@ export default function AuthModal({ open, onOpenChange }: { open: boolean; onOpe
             {view === "signup" && "Sign Up"}
             {view === "forgot" && "Forgot Password"}
             {view === "verify" && "Verify Email"}
+            {view === 'resetOtp' && "Reset Password OTP"}
             {view === "reset" && "Reset Password"}
           </DialogTitle>
         </DialogHeader>
@@ -42,6 +34,7 @@ export default function AuthModal({ open, onOpenChange }: { open: boolean; onOpe
           {view === "signup" && <SignUp switchView={setView} />}
           {view === "forgot" && <ForgotPassword switchView={setView} />}
           {view === "verify" && <VerifyEmail switchView={setView} />}
+          {view === 'resetOtp' && <ResetPasswordOtp switchView={setView} />}
           {view === "reset" && <ResetPassword switchView={setView} />}
         </div>
       </DialogContent>

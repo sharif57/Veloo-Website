@@ -8,36 +8,42 @@ import { Button } from "../ui/button";
 import Apple from "../icon/apple";
 import Microsoft from "../icon/microsoft";
 import Google from "../icon/google";
-import { useRouter } from "next/navigation";
+import { useLoginMutation } from "@/redux/feature/authSlice";
+import { toast } from "sonner";
 
-type AuthView = "login" | "signup" | "forgot";
+type AuthView = "login" | "signup" | "forgot" | '/';
 
 export default function Login({ switchView }: { switchView: (v: AuthView) => void }) {
 
-    const router = useRouter()
-
     const [loading, setLoading] = useState(false)
-
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [login] = useLoginMutation()
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
         try {
-            setLoading(true)
-            router.refresh()
-        } catch (error) {
+            const res = await login({ email, password }).unwrap();
+            // console.log(res?.data?.tokens?.access)
+            toast.success(res?.message || "Login successful!")
+            localStorage.setItem("accessToken", res?.data?.tokens?.access)
+            setLoading(false)
+            // router.push("/")
+            // switchView("/")
+            window.location.href = "/";
+        } catch (error: any) {
+            toast.error(error?.data?.errors?.email?.[0] || error?.data?.errors?.password?.[0] || error?.data?.message || "Login failed. Please check your credentials and try again.")
             setLoading(false)
         }
-        // Handle sign in logic here
-        console.log("Sign in attempt:", { email, password })
     }
     return (
-        <div className="">
+        <div className="overflow-y-auto h-[70vh]">
             <div className="w-full max-w-md mx-auto ">
                 <div className="">
-                   
+
 
                     <form onSubmit={handleSubmit} className="space-y-3">
                         {/* Email Field */}

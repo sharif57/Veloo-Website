@@ -6,7 +6,7 @@ export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data) => ({
-        url: "/auth/signup/",
+        url: "/account/signup/",
         method: "POST",
         body: data,
       }),
@@ -14,7 +14,7 @@ export const authApi = baseApi.injectEndpoints({
 
     login: builder.mutation({
       query: (credentials) => ({
-        url: "/auth/login/",
+        url: "/account/login/",
         method: "POST",
         body: credentials,
       }),
@@ -31,7 +31,7 @@ export const authApi = baseApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (data) => ({
-        url: "/auth/forgot_password/",
+        url: "/account/forget-password/",
         method: "POST",
         body: data,
       }),
@@ -39,7 +39,22 @@ export const authApi = baseApi.injectEndpoints({
 
     verifyEmail: builder.mutation({
       query: (data) => ({
-        url: "/auth/verify_email/",
+        url: "/account/verify-otp/registration/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    forgotVerifyOtp: builder.mutation({
+      query: (data) => ({
+        url: "/account/password/verify-otp/",
+        // password/verify-otp/
+        method: "POST",
+        body: data,
+      }),
+    }),
+    resendOtp: builder.mutation({
+      query: (data) => ({
+        url: "/account/resend-otp/",
         method: "POST",
         body: data,
       }),
@@ -48,21 +63,21 @@ export const authApi = baseApi.injectEndpoints({
     resetPassword: builder.mutation({
       query: (data) => {
         return {
-          url: "/auth/update_password/",
+          url: "/account/reset-password/",
           method: "POST",
           body: data,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
+            Authorization: `Bearer ${localStorage.getItem("resetToken")}`,
           },
         };
       },
     }),
 
     googleLogin: builder.mutation({
-      query: ({id_token}) => ({
+      query: ({ id_token }) => ({
         url: "/auth/googleLogin/",
         method: "POST",
-        body: {id_token: id_token},
+        body: { id_token: id_token },
       }),
     }),
 
@@ -93,6 +108,8 @@ export const {
   useChangePasswordMutation,
   useForgotPasswordMutation,
   useVerifyEmailMutation,
+  useForgotVerifyOtpMutation,
+  useResendOtpMutation,
   useResetPasswordMutation,
   useGoogleLoginMutation,
   useFacebookLoginMutation,
