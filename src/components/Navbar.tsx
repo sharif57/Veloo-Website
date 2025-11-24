@@ -184,7 +184,7 @@ export function Navbar() {
   const pathname = usePathname()
 
   const { data } = useUserProfileQuery(undefined);
-  console.log(data)
+  console.log(data?.data?.user)
 
   const menus = [
     { name: "Services", url: "#services" },
@@ -192,6 +192,8 @@ export function Navbar() {
     { name: "About Us", url: "/about" },
     { name: "Support", url: "/support" },
   ]
+
+  const IMAGE = process.env.NEXT_PUBLIC_API_URL + data?.data?.user?.profile_pic;
 
   return (
     <header className="w-full py-4 bg-white sticky top-0 z-50 mb-8">
@@ -235,8 +237,8 @@ export function Navbar() {
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <Avatar className="size-10">
-                      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarImage src={IMAGE} alt="@shadcn" />
+                      <AvatarFallback>{data?.data?.user?.full_name}</AvatarFallback>
                     </Avatar>
                     {/* <Avatar className="rounded-lg">
                       <AvatarImage
@@ -249,7 +251,9 @@ export function Navbar() {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <Link href="/settings/profile" className="cursor-pointer">
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                    </Link>
                     <DropdownMenuItem>Billing</DropdownMenuItem>
                     <DropdownMenuItem>Team</DropdownMenuItem>
                     <DropdownMenuItem>Subscription</DropdownMenuItem>
