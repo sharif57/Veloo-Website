@@ -7,6 +7,7 @@ import "../globals.css";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Metadata } from "next";
 import Providers from "@/Providers/Providers";
+import { Toaster } from "sonner";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -41,6 +42,7 @@ export default function DashboardLayout({
 
               {/* Main Content */}
               <main className="p-6 overflow-auto ">{children}</main>
+              <Toaster />
             </div>
           </div>
         </Providers>

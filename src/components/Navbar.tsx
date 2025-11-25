@@ -177,6 +177,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import GoogleTranslate from "./GoogleTranslate"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -197,6 +198,7 @@ export function Navbar() {
 
   return (
     <header className="w-full py-4 bg-white sticky top-0 z-50 mb-8">
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-2">
         <div className="flex items-center justify-between">
           {/* Logo and Desktop Navigation */}
@@ -227,6 +229,7 @@ export function Navbar() {
                   {menu.name}
                 </Link>
               ))}
+              <GoogleTranslate />
             </nav>
           </div>
 
