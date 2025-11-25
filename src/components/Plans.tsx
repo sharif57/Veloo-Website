@@ -1,62 +1,44 @@
-
+"use client";
 import React from 'react';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import {  useSubscriptionPlansQuery } from '@/redux/feature/subscriptionSlice';
 
-export default function  Plans() {
-  const plans = [
-    {
-      title: 'Basic',
-      price: 56,
-      features: [
-        'Create up to 5 offers per month',
-        'Access to AI-powered pricing tool',
-        'Customer Follow-up',
-        'Basic task and calendar management',
-      ],
-    },
-    {
-      title: 'Pro',
-      price: 199,
-      features: [
-        'Create unlimited offers',
-        'Advanced AI suggestions and custom settings',
-        'Integration with external calendars',
-        'Priority customer support',
-      ],
-    },
-    {
-      title: 'Enterprise',
-      price: 399,
-      features: [
-        'Tailored solutions for your business',
-        'Dedicated account manager',
-        'Advanced reporting and analytics',
-        'Full system integrations',
-      ],
-    },
-  ];
+interface Plan {
+      id: number;
+      name: string;
+      price: number;
+      features: string[];
+}
 
+export default function Plans() {
+
+
+
+  const { data } = useSubscriptionPlansQuery(undefined);
+  console.log(data?.results, 'plane')
+
+  
   return (
     <div id="prices" className="container mx-auto p-4">
       <h1 className="text-4xl sm:text-5xl md:text-6xl w-full sm:w-1/2 mx-auto leading-tight font-semibold text-[#4B5563] text-center">
         Affordable Plans for Service Providers
       </h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-14 mt-12">
-        {plans.map((plan) => (
+        {data?.results?.map((plan : Plan) => (
           <div
-            key={plan.title}
-            title={plan.title}
+            key={plan?.id}
+            title={plan?.name}
             className="bg-white p-6 sm:p-10 cursor-pointer hover:bg-[#A7F3D0] hover:duration-1000 rounded-3xl shadow-lg flex flex-col min-h-[400px]"
-            aria-labelledby={`${plan.title}-title`}
+            aria-labelledby={`${plan?.name}-title`}
           >
 
             <p className="text-3xl sm:text-4xl font-semibold text-[#374151] mt-2">
               ${plan.price} <span className="text-base sm:text-lg font-medium">/ month</span>
             </p>
 
-            <h2 id={`${plan.title}-title`} className="text-2xl mt-4 font-semibold text-[#374151]">
-              {plan.title}
+            <h2 id={`${plan?.name}-title`} className="text-2xl mt-4 font-semibold text-[#374151]">
+              {plan?.name}
             </h2>
             <ul className="flex-1 mt-6 space-y-4">
               {plan.features.map((feature, index) => (
@@ -80,13 +62,13 @@ export default function  Plans() {
                 </li>
               ))}
             </ul>
-            <Link href={'/subscriptions/place-order'} className='cursor-pointer'>
-            <Button
-              className="bg-[#059669] text-white cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] transition-colors mt-16 w-full"
-              aria-label={`Choose ${plan.title} Plan`}
-            >
-              Choose Plan
-            </Button>
+            <Link href={`/subscriptions/place-order?plan=${plan?.id}`} className='cursor-pointer'>
+              <Button
+                className="bg-[#059669] text-white cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] transition-colors mt-16 w-full"
+                aria-label={`Choose ${plan?.name} Plan`}
+              >
+                Choose Plan
+              </Button>
             </Link>
           </div>
         ))}

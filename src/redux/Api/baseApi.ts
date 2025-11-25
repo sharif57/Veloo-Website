@@ -18,8 +18,7 @@ export const baseApi = createApi({
   tagTypes: [
     "User",
     "Session",
-    "Story",
-    "Blog",
+    "Subscription",
 
   ],
   endpoints: () => ({}),

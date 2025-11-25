@@ -35,7 +35,7 @@ export default function Offers() {
             <div className="  py-4 sm:p-6 flex items-start justify-start">
                 <div className="w-full max-w-4xl">
                     {/* Header with Search and Filter */}
-                    <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+                    {/* <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
                         <input
                             type="text"
                             placeholder="Search by customer name, offer number, or task type..."
@@ -65,7 +65,7 @@ export default function Offers() {
                                 ))}
                             </DropdownMenuContent>
                         </DropdownMenu>
-                    </div>
+                    </div> */}
 
                     {/* Create New Offer Button */}
                     <div className="flex items-center justify-start">

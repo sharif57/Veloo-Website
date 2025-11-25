@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Replace with your base URL
 // const API_URL = "http://10.10.12.111:8001/ai/api";
-const API_URL = "https://api.enitiative.org/ai/api";
+const API_URL = "http://10.10.12.46:8000";
 
-export const chatApi = createApi({
+export const aiApi = createApi({
   reducerPath: "chatApi",
   tagTypes: ["Session"],
   baseQuery: fetchBaseQuery({
@@ -19,9 +19,9 @@ export const chatApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    createSession: builder.mutation({
+    generateOffer: builder.mutation({
       query: (data) => ({
-        url: "/session/create",
+        url: "/offers/generate",
         method: "POST",
         body: data,
       }),
@@ -57,8 +57,8 @@ export const chatApi = createApi({
 });
 
 export const {
-  useCreateSessionMutation,
+  useGenerateOfferMutation,
   useChatCreateMutation,
   useChatListQuery,
   useUserAllSessionsQuery
-} = chatApi;
+} = aiApi;
