@@ -40,17 +40,17 @@ export const aiApi = createApi({
     // /offers/?offer_id=8f13e13e-9bba-41e6-9d2d-49959d54e5d6
     getOffer: builder.query({
       query: (offerId) => ({
-        url: `/offers/?offer_id=${offerId}`,
+        url: `/offers/${offerId}`,
         method: "GET",
       }),
       providesTags: ["Session"],
     }),
 
     saveOffer: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ( data ) => ({
         // /save/offer?user_id=1234
-        url: `/save/offer?user_id=${id}`,
-        method: "POST",
+        url: `/save/offer`,
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Session"],
