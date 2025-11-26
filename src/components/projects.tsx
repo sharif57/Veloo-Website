@@ -7,16 +7,26 @@ import Image from 'next/image';
 import { Payment } from './taps/payment';
 import Link from 'next/link';
 import Materials from './taps/materials';
+import { useSearchParams } from 'next/navigation';
+import { useGetOfferQuery } from '@/redux/feature/chatSlice';
 
 export default function TaskDashboards() {
+
+    const params = useSearchParams();
+    const id = params.get('offer_id')
+    console.log(id)
+
+    // const { data: user } = useUserProfileQuery(undefined);
+    const { data } = useGetOfferQuery(id);
+    console.log(data, 'my offers')
     const [isActive, setIsActive] = useState(1);
 
     // All tabs and Components
     const tabsAndComponents = [
         { id: 1, label: 'Project', content: <Project /> },
         { id: 2, label: 'Quote', content: <Image src="/image/pdf1.png" alt="Quote" height={1000} width={1000} className='w-full' /> },
-        { id: 4, label: 'Payment', content: <Payment /> },
-        { id: 5, label: 'Materials', content: <Materials /> },
+        // { id: 4, label: 'Payment', content: <Payment /> },
+        { id: 5, label: 'Materials', content: <Materials id={id} /> },
     ];
 
     return (
@@ -41,7 +51,7 @@ export default function TaskDashboards() {
                             {tab.label}
                         </li>
                     ))}
-                    <li><Link href="/offers/message" className="p-4">Message</Link></li>
+                    {/* <li><Link href="/offers/message" className="p-4">Message</Link></li> */}
                 </ul>
                 <div className="mt-4 h-[calc(100%-120px)] overflow-y-auto">
                     {tabsAndComponents.find((tab) => tab.id === isActive)?.content}

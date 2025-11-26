@@ -47,18 +47,18 @@ export const aiApi = createApi({
     }),
 
     saveOffer: builder.mutation({
-      query: ( data ) => ({
+      query: ( data  ) => ({
         // /save/offer?user_id=1234
-        url: `/save/offer`,
+        url: `/offers/save`,
         method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Session"],
     }),
-
-    chatList: builder.query({
-      query: (sessionId) => ({
-        url: `/session/${sessionId}/chats`,
+// /offers/?user_id=11
+    userWiseOffer: builder.query({
+      query: (id) => ({
+        url: `/offers/?user_id=${id} `,
         method: "GET",
       }),
       providesTags: ["Session"],
@@ -80,6 +80,6 @@ export const {
   useUpdateGeneratedOfferMutation,
   useGetOfferQuery,
   useSaveOfferMutation,
-  useChatListQuery,
+  useUserWiseOfferQuery,
   useUserAllSessionsQuery
 } = aiApi;

@@ -358,7 +358,8 @@ import { toast } from "sonner";
 import ChatLog from "@/components/icon/chatLog";
 import ReactMarkdown from "react-markdown";
 import { useGetOfferQuery, useSaveOfferMutation, useUpdateGeneratedOfferMutation } from "@/redux/feature/chatSlice";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUserProfileQuery } from "@/redux/feature/userSlice";
 
 interface FormData {
   customerName: string;
@@ -467,9 +468,14 @@ function ServiceRequestForm({
   handleInputChange: (field: keyof FormData, value: string) => void;
   handleSaveChanges: () => void;
 }) {
+  const router = useRouter()
   const searchParams = useSearchParams();
   const offerId = searchParams.get("offer_id");
-  console.log(offerId)
+  // console.log(offerId)
+
+  const { data: offers } = useGetOfferQuery(offerId);
+  const {data , refetch} = useUserProfileQuery(undefined);
+  console.log(data?.data?.user, 'profile+++++++++++++++++++++++++++//')
 
   const [saveOffer] = useSaveOfferMutation();
 
@@ -477,11 +483,26 @@ function ServiceRequestForm({
     if (!offerId) return;
 
     try {
-      const res = await saveOffer(offer).unwrap();
+      const res = await saveOffer({
+        customer_name: offer?.customer_name,
+        phone_number: offer?.phone_number,
+        address: offer?.address,
+        task_description: offer?.task_description,
+        bill_of_materials: offer?.bill_of_materials,
+        time: offer?.time,
+        price: offer?.price,
+        timestamp: offer?.timestamp,
+        offer_id: offer?.id,
+        materials_ordered: offer?.materials_ordered,
+        resource: offer?.resource,
+        user_id: data?.data?.user?.user_id.toString(),
+
+      } ).unwrap();
       console.log(res, 'offer save')
 
       toast.success("Offer saved successfully!");
-      // refetch(); // Refresh latest data
+      refetch(); // Refresh latest data
+      router.push(`/offers/projects?offer_id=${offerId}`)
     } catch (error: any) {
       toast.error(error?.data?.detail || "Failed to save offer");
       console.error(error);

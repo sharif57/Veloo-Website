@@ -2,61 +2,59 @@ import React from 'react'
 import { Checkbox } from '../ui/checkbox'
 import { Label } from '@radix-ui/react-label'
 import Image from 'next/image'
+import { useGetOfferQuery, useUserWiseOfferQuery } from '@/redux/feature/chatSlice'
+import { useUserProfileQuery } from '@/redux/feature/userSlice'
+import { useSearchParams } from 'next/navigation'
 
 export default function Project() {
+    const params = useSearchParams();
+    const id = params.get('offer_id')
+    console.log(id)
 
-
+    // const { data: user } = useUserProfileQuery(undefined);
+    const { data } = useGetOfferQuery(id);
+    console.log(data, 'my offers')
     return (
         <div className='space-y-6'>
-            <div className='lg:flex w-full items-center  gap-6 lg:space-y-0 space-y-4 '>
-                <div className='border-[#9CA3AF] border-2 rounded-md px-5 py-6 lg:w-4/5'>
-                    <div className='flex justify-between items-center'>
-                        <div className='space-y-2'>
-                            <p className='text-lg font-normal text-[#6B7280]'>Status</p>
-                            <h1 className='text-xl font-semibold text-[#022C22]'>Planned</h1>
-                            <p className='text-lg font-normal text-[#6B7280]'>Expected start date </p>
-                            <h1 className='text-xl font-semibold text-[#022C22]'>August 14, 2025</h1>
-                        </div>
-                        <div className='space-y-2'>
-                            <p className='text-lg font-normal text-[#6B7280]'>Status</p>
-                            <h1 className='text-xl font-semibold text-[#022C22]'>Planned</h1>
-                            <p className='text-lg font-normal text-[#6B7280]'>Expected start date </p>
-                            <h1 className='text-xl font-semibold text-[#022C22]'>August 14, 2025</h1>
-                        </div>
-                    </div>
-                </div>
-                <div className='border-[#9CA3AF] border-2 rounded-md px-5 py-6 lg:w-1/5 space-y-2'>
-                    <h1 className='text-[#022C22] text-xl font-semibold'>Timeline</h1>
-                    <div className='flex items-center gap-2'>
-                        <Checkbox id="timeline" />
-                        <Label htmlFor="timeline" className="text-xl font-normal text-[#6B7280]">Preparation</Label>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        <Checkbox id="timeline" />
-                        <Label htmlFor="timeline" className="text-xl font-normal text-[#6B7280]">Construction</Label>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        <Checkbox id="timeline" />
-                        <Label htmlFor="timeline" className="text-xl font-normal text-[#6B7280]">Finishing touches</Label>
-                    </div>
 
+            <div>
+                <div className='lg:flex w-full items-center  gap-6 lg:space-y-0 space-y-4 '>
+                    <div className='border-[#9CA3AF] border-2 rounded-md px-5 py-6 lg:w-4/5'>
+                        <div className='flex justify-between items-center'>
+                            <div className='space-y-2'>
+                                <p className='text-lg font-normal text-[#6B7280]'>Status</p>
+                                <h1 className='text-xl font-semibold text-[#022C22]'>{data?.status || ''}</h1>
+                                <p className='text-lg font-normal text-[#6B7280]'>Expected start date </p>
+                                <h1 className='text-xl font-semibold text-[#022C22]'>{data?.time || ''}</h1>
+                            </div>
+                            {/* <div className='space-y-2'>
+                                <p className='text-lg font-normal text-[#6B7280]'>Status</p>
+                                <h1 className='text-xl font-semibold text-[#022C22]'>Planned</h1>
+                                <p className='text-lg font-normal text-[#6B7280]'>Expected start date </p>
+                                <h1 className='text-xl font-semibold text-[#022C22]'>August 14, 2025</h1>
+                            </div> */}
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div className='lg:flex items-center justify-between'>
+                    <div className='border-[#9CA3AF] border-2 rounded-md px-5 py-6 lg:w-1/3 space-y-2  '>
+                        <h1 className='text-[#022C22] text-xl font-semibold'>Client Information</h1>
+                        <p className='text-lg font-normal text-[#6B7280]'>{data?.customer_name || ''}</p>
+                        <p className='text-lg font-normal text-[#6B7280]'>{data?.address || ''}</p>
+                        <p className='text-lg font-normal text-[#6B7280]'>{data?.phone_number || ''}</p>
+                        {/* <p className='text-lg font-normal text-[#6B7280]'>wdddy,vkeark @gmail.com</p> */}
+                        <p className='text-lg font-normal text-[#6B7280]'>{data?.resource || ''}</p>
+                    </div>
+                    <div className='space-y-4 lg:mt-0 mt-4'>
+                        <h1 className='text-[#022C22] text-xl font-semibold '>Timeline</h1>
+                        <Image src="/image/pdf.png" alt="Project Image" width={500} height={300} />
+                    </div>
                 </div>
             </div>
 
-            <div className='lg:flex items-center justify-between'>
-                <div className='border-[#9CA3AF] border-2 rounded-md px-5 py-6 lg:w-1/3 space-y-2  '>
-                    <h1 className='text-[#022C22] text-xl font-semibold'>Timeline</h1>
-                    <p className='text-lg font-normal text-[#6B7280]'>Eddy Chark</p>
-                    <p className='text-lg font-normal text-[#6B7280]'>12A Angle Road </p>
-                    <p className='text-lg font-normal text-[#6B7280]'>01928376233</p>
-                    <p className='text-lg font-normal text-[#6B7280]'>wdddy,vkeark @gmail.com</p>
-                    <p className='text-lg font-normal text-[#6B7280]'>gate closed</p>
-                </div>
-                <div className='space-y-4 lg:mt-0 mt-4'>
-                    <h1 className='text-[#022C22] text-xl font-semibold '>Timeline</h1>
-                    <Image src="/image/pdf.png" alt="Project Image" width={500} height={300} />
-                </div>
-            </div>
+
 
             <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-12 gap-4 mt-8'>
                 <div className='bg-[#D1FAE5] space-y-4 p-4 rounded-md flex flex-col items-center'>
