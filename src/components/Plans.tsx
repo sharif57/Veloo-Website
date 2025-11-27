@@ -1,31 +1,47 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from './ui/button';
 import Link from 'next/link';
-import {  useSubscriptionPlansQuery } from '@/redux/feature/subscriptionSlice';
+import { useSubscriptionCheckoutMutation, useSubscriptionPlansQuery } from '@/redux/feature/subscriptionSlice';
+import { toast } from 'sonner';
 
 interface Plan {
-      id: number;
-      name: string;
-      price: number;
-      features: string[];
+  id: number;
+  name: string;
+  price: number;
+  features: string[];
 }
 
 export default function Plans() {
 
-
-
+  const [loading, setLoading] = useState(false);
   const { data } = useSubscriptionPlansQuery(undefined);
   console.log(data?.results, 'plane')
+  const [subscriptionCheckout] = useSubscriptionCheckoutMutation();
 
-  
+  const handleCheckout = async (planId: number) => {
+    setLoading(true);
+    try {
+      const res = await subscriptionCheckout({ plan_id: planId }).unwrap();
+      console.log(res);
+
+      window.location.href = res?.checkout_url;
+      setLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.message || "Subscription failed. Please try again.");
+      setLoading(false);
+    }
+  };
+
+
   return (
     <div id="prices" className="container mx-auto p-4">
       <h1 className="text-4xl sm:text-5xl md:text-6xl w-full sm:w-1/2 mx-auto leading-tight font-semibold text-[#4B5563] text-center">
         Affordable Plans for Service Providers
       </h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-14 mt-12">
-        {data?.results?.map((plan : Plan) => (
+        {data?.results?.map((plan: Plan) => (
           <div
             key={plan?.id}
             title={plan?.name}
@@ -62,14 +78,16 @@ export default function Plans() {
                 </li>
               ))}
             </ul>
-            <Link href={`/subscriptions/place-order?plan=${plan?.id}`} className='cursor-pointer'>
-              <Button
-                className="bg-[#059669] text-white cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] transition-colors mt-16 w-full"
-                aria-label={`Choose ${plan?.name} Plan`}
-              >
-                Choose Plan
-              </Button>
-            </Link>
+            {/* <Link href={`/subscriptions/place-order?plan=${plan?.id}`} className='cursor-pointer'> */}
+            <Button
+              onClick={() => handleCheckout(plan?.id)}
+              disabled={loading}
+              className="bg-[#059669] text-white cursor-pointer text-base sm:text-lg font-medium px-4 py-4 sm:px-6 sm:py-6 rounded-md shadow-2xl hover:bg-[#047857] transition-colors mt-16 w-full"
+              aria-label={`Choose ${plan?.name} Plan`}
+            >
+              {loading ? "Loading..." : "Choose Plan"}
+            </Button>
+            {/* </Link> */}
           </div>
         ))}
       </div>

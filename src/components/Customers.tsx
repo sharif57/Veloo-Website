@@ -5,56 +5,37 @@ import { Button } from './ui/button'
 
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import { useGetQuerryQuery, useSubmitQuerryMutation } from '@/redux/feature/querrySlice';
+import { toast } from 'sonner';
+
+interface Testimonial {
+    id: number;
+    thoughts: string;
+    user: string;
+    image: string;
+}
 
 export default function Customers() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [testimonialText, setTestimonialText] = useState("");
-    const handleShare = () => {
-        // Handle testimonial submission
-        console.log("Testimonial submitted:", testimonialText);
-        setTestimonialText("");
-        setIsModalOpen(false);
+
+    const { data } = useGetQuerryQuery(undefined);
+    console.log(data?.data, '============')
+
+    const [submitQuerry] = useSubmitQuerryMutation();
+
+    const handleShare = async () => {
+        try {
+            const res = await submitQuerry({ thoughts: testimonialText }).unwrap();
+            toast?.success(res?.message || "Querry submitted successfully!");
+            setIsModalOpen(false);
+        } catch (error: any) {
+            toast?.error( error?.data?.message || "Failed to submit querry. Please try again.");
+        }
     };
 
-   const testimonials = [
-  {
-    id: 1,
-    title: 'Veloo saved me hours each week — quoting is now the easiest part of my job',
-    name: "Sharif Mahamud",
-    image: '/image/users.png'
-  },
-  {
-    id: 2,
-    title: 'I love that everything is in one place. It’s made my business more organized',
-    name: "John Doe",
-    image: '/image/users.png'
-  },
-  {
-    id: 3,
-    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-    name: "Jane Smith",
-    image: '/image/users.png'
-  },
-  {
-    id: 4,
-    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-    name: "Jane Smith",
-    image: '/image/users.png'
-  },
-  {
-    id: 5,
-    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-    name: "Jane Smith",
-    image: '/image/users.png'
-  },
-  {
-    id: 6,
-    title: 'Veloo has been a game-changer for my business. It’s easy to use and effective',
-    name: "Jane Smith",
-    image: '/image/users.png'
-  }
-];
+
 
 
     return (
@@ -65,16 +46,16 @@ export default function Customers() {
             <div>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 mt-12'>
                     {
-                        testimonials.map((testimonial) => (
-                            <div  key={testimonial.id} className='bg-white p-6 space-y-5 rounded-2xl'>
+                        data?.data?.map((testimonial: Testimonial) => (
+                            <div key={testimonial.id} className='bg-white p-6 space-y-5 rounded-2xl'>
                                 <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18.845 27.197V19.199C18.845 14.177 20.023 10.085 22.379 6.923C24.797 3.699 28.362 1.591 33.074 0.598997V6.644C30.966 7.14 29.292 8.07 28.052 9.43399C26.812 10.736 26.006 12.317 25.634 14.177H31.214V27.197H18.845ZM0.0589812 27.197V19.199C0.0589812 14.177 1.23698 10.085 3.59298 6.923C6.01098 3.699 9.54498 1.591 14.195 0.598997V6.644C12.087 7.14 10.413 8.07 9.17298 9.43399C7.93298 10.736 7.12698 12.317 6.75498 14.177H12.335V27.197H0.0589812Z" fill="#059669" />
                                 </svg>
 
-                                <p className="text-lg font-medium text-[#6B7280]">{testimonial.title}</p>
+                                <p className="text-lg font-medium text-[#6B7280]">{testimonial?.thoughts}</p>
                                 <div className='flex items-center gap-4'>
-                                    <Image src={testimonial.image} width={50} height={50} alt="user" />
-                                    <p className="text-lg  font-medium text-[#4B5563]">{testimonial.name}</p>
+                                    <Image src={testimonial?.image} width={50} height={50} alt="user" />
+                                    <p className="text-lg  font-medium text-[#4B5563]">{testimonial?.user}</p>
                                 </div>
                             </div>
                         ))

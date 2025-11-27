@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import { Button } from './ui/button';
 import Project from './taps/project';
 import Image from 'next/image';
-import { Payment } from './taps/payment';
-import Link from 'next/link';
 import Materials from './taps/materials';
 import { useSearchParams } from 'next/navigation';
 import { useGetOfferQuery } from '@/redux/feature/chatSlice';
+import Quote from './taps/quote';
 
 export default function TaskDashboards() {
 
@@ -23,8 +22,8 @@ export default function TaskDashboards() {
 
     // All tabs and Components
     const tabsAndComponents = [
-        { id: 1, label: 'Project', content: <Project /> },
-        { id: 2, label: 'Quote', content: <Image src="/image/pdf1.png" alt="Quote" height={1000} width={1000} className='w-full' /> },
+        { id: 1, label: 'Project', content: <Project id={id} /> },
+        { id: 2, label: 'Quote', content: <Quote id={id} /> },
         // { id: 4, label: 'Payment', content: <Payment /> },
         { id: 5, label: 'Materials', content: <Materials id={id} /> },
     ];
@@ -33,10 +32,11 @@ export default function TaskDashboards() {
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md mx-auto container ">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                 <h1 className="text-2xl md:text-3xl font-bold text-[#022C22]">
-                    Renovation of terrace - 12A Angle Road
+                    {/* Renovation of terrace - 12A Angle Road */}
+                    {data?.customer_name} - {data?.address}
                 </h1>
                 <Button className="bg-[#ecfdf5] rounded-full text-base md:text-lg font-normal px-4 md:px-8 py-2 md:py-5 text-[#10B981] border border-[#10B981] hover:bg-[#ecfdf5] cursor-pointer">
-                    Confirmed
+                    {data?.status}
                 </Button>
             </div>
             <div className="mt-6">

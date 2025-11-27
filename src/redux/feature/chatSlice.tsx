@@ -47,7 +47,7 @@ export const aiApi = createApi({
     }),
 
     saveOffer: builder.mutation({
-      query: ( data  ) => ({
+      query: (data) => ({
         // /save/offer?user_id=1234
         url: `/offers/save`,
         method: "PUT",
@@ -55,13 +55,54 @@ export const aiApi = createApi({
       }),
       invalidatesTags: ["Session"],
     }),
-// /offers/?user_id=11
+    // /offers/?user_id=11
     userWiseOffer: builder.query({
       query: (id) => ({
         url: `/offers/?user_id=${id} `,
         method: "GET",
       }),
       providesTags: ["Session"],
+    }),
+
+
+    // /email-offer
+    customerEmail: builder.mutation({
+      query: (data) => ({
+        url: "/email-offer",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Session"],
+    }),
+
+    // /email-acceptance
+    customerAcceptance: builder.mutation({
+      query: (data) => ({
+        url: "/email-acceptance",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Session"],
+    }),
+
+    // /email-custom
+    customerCustom: builder.mutation({
+      query: (data) => ({
+        url: "/email-custom",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Session"],
+    }),
+
+    // /send-email
+    sendEmail: builder.mutation({
+      query: (data) => ({
+        url: "/send-email",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Session"],
     }),
 
     userAllSessions: builder.query({
@@ -81,5 +122,9 @@ export const {
   useGetOfferQuery,
   useSaveOfferMutation,
   useUserWiseOfferQuery,
+  useCustomerEmailMutation,
+  useCustomerAcceptanceMutation,
+  useCustomerCustomMutation,
+  useSendEmailMutation,
   useUserAllSessionsQuery
 } = aiApi;

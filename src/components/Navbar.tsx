@@ -229,7 +229,7 @@ export function Navbar() {
                   {menu.name}
                 </Link>
               ))}
-              <GoogleTranslate />
+              {/* <GoogleTranslate /> */}
             </nav>
           </div>
 

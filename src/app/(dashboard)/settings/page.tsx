@@ -61,7 +61,7 @@ export default function MenuItems() {
             href: '/settings/profile',
         },
         {
-            name: 'Revenue Settings',
+            name: 'Resource',
             href: '/settings/revenue',
         },
         {

@@ -19,6 +19,8 @@ export const baseApi = createApi({
     "User",
     "Session",
     "Subscription",
+    'Supplier',
+    'Querry'
 
   ],
   endpoints: () => ({}),

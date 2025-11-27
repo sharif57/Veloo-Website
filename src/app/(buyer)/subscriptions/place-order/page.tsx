@@ -8,8 +8,16 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "sonner"
+import { useSearchParams } from "next/navigation"
+import { useSubscriptionDetailsQuery } from "@/redux/feature/subscriptionSlice"
 
 export default function OrderForm() {
+
+  const searchParams = useSearchParams();
+  const planId = searchParams.get('plan'); // "4"
+  console.log(planId)
+  const {data} = useSubscriptionDetailsQuery(planId)
+  console.log(data, 'place')
   const [formData, setFormData] = useState({
     name: "Abrar Jhon",
     email: "hello@gmail.com",
@@ -22,7 +30,7 @@ export default function OrderForm() {
     e.preventDefault()
     console.log("Order submitted:", formData)
     toast.success('Order placed successfully!')
-    
+
   }
 
   return (
@@ -92,7 +100,7 @@ export default function OrderForm() {
 
         {/* Payment Method Field */}
         <div className="space-y-2">
-          <Label htmlFor="payment"  className="text-lg font-semibold text-[#374151]">
+          <Label htmlFor="payment" className="text-lg font-semibold text-[#374151]">
             Payment Method
           </Label>
           <Select
@@ -110,7 +118,7 @@ export default function OrderForm() {
             </SelectContent>
           </Select>
         </div>
-        
+
 
         {/* Submit Button */}
         <Button
