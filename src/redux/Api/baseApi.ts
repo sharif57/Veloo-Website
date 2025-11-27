@@ -20,6 +20,7 @@ export const baseApi = createApi({
     "Session",
     "Subscription",
     'Supplier',
+    "Settings",
     'Querry'
 
   ],

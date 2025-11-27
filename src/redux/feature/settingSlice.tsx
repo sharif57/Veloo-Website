@@ -1,49 +1,40 @@
 import baseApi from "../Api/baseApi";
 
- 
 const settingSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
-
+    // -------- Terms and Conditions --------
     getTermsAndConditions: builder.query({
       query: () => ({
-        url: `/dicipline/terms-conditions/`,
+        url: `/discipline/terms-conditions/`,
         method: "GET",
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        // },
       }),
+      providesTags: ["Settings"],
     }),
- 
- 
+
+    // -------- Privacy Policy --------
     getPrivacyPolicy: builder.query({
       query: () => ({
-        url: `/dicipline/privacy-policy/`,
+        url: `/privacy/privacy-policy/`,
         method: "GET",
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        // },
       }),
+      providesTags: ["Settings"],
     }),
- 
 
- 
+    // -------- Trust & Safety --------
     getTrustAndSafety: builder.query({
       query: () => ({
-        url: `/dicipline/trust-safety/`,
+        url: `/discipline/trust-safety/`,
         method: "GET",
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        // },
       }),
+      providesTags: ["Settings"],
     }),
- 
+
   }),
 });
- 
+
 export const {
   useGetTermsAndConditionsQuery,
   useGetPrivacyPolicyQuery,
   useGetTrustAndSafetyQuery,
 } = settingSlice;
- 

@@ -252,7 +252,16 @@ export default function AddResource() {
   const [endTime, setEndTime] = useState('17:00');
   const [availabilityDays, setAvailabilityDays] = useState<string[]>([]);
 
-  const days = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+ const days = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday'
+];
+
 
   const toggleDay = (day: string) => {
     setAvailabilityDays(prev =>
@@ -271,17 +280,17 @@ export default function AddResource() {
     // You can change this base date or make it dynamic
     const baseDate = '2025-12-01'; // or use current date
 
-    const payload = {
-      name,
-      email,
-      phone_number: phoneNumber,
-      role,
-      add_to_calender: addToCalendar, // exact key as backend expects
-      start_datetime: `${baseDate}T${startTime}:00Z`,
-      end_datetime: `${baseDate}T${endTime}:00Z`,
-      // Optional: send availability days if backend needs them
-      // availability_days: availabilityDays.length > 0 ? availabilityDays : undefined,
-    };
+ const payload = {
+  name,
+  email,
+  phone_number: phoneNumber,
+  role,
+  add_to_calender: addToCalendar,
+  start_time: `${startTime}:00`,   // "09:00:00"
+  end_time: `${endTime}:00`,       // "17:00:00"
+  days: availabilityDays.length > 0 ? availabilityDays : undefined,
+};
+
 
     console.log('Sending payload:', payload);
 
@@ -426,7 +435,7 @@ export default function AddResource() {
                 </div>
 
                 {/* Days Selection */}
-                {/* <div className="flex flex-wrap gap-2 bg-[#D1FAE5] rounded-lg p-3">
+                <div className="flex flex-wrap gap-2 bg-[#D1FAE5] rounded-lg p-3">
                   {days.map((day) => (
                     <button
                       key={day}
@@ -441,7 +450,7 @@ export default function AddResource() {
                       {day}
                     </button>
                   ))}
-                </div> */}
+                </div>
               </div>
             </div>
 
