@@ -238,7 +238,7 @@ import {
 } from '@/redux/feature/chatSlice';
 import { toast } from 'sonner';
 
-export default function Materials({ id }: { id: string }) {
+export default function Materials({ id }: any) {
   const { data } = useGetOfferQuery(id);
 
   // Mutations

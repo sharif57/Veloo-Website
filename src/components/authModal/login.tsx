@@ -1,3 +1,201 @@
+// 'use client';
+
+// import { useState } from "react";
+// import { Label } from "../ui/label";
+// import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+// import { Input } from "../ui/input";
+// import { Button } from "../ui/button";
+// import Apple from "../icon/apple";
+// import Microsoft from "../icon/microsoft";
+// import Google from "../icon/google";
+// import { useGoogleLoginMutation, useLoginMutation } from "@/redux/feature/authSlice";
+// import { toast } from "sonner";
+// import AppleLogin from 'react-apple-login'
+// import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+
+
+// type AuthView = "login" | "signup" | "forgot" | '/';
+
+// export default function Login({ switchView }: { switchView: (v: AuthView) => void }) {
+
+//     const [loading, setLoading] = useState(false)
+//     const [showPassword, setShowPassword] = useState(false)
+//     const [email, setEmail] = useState("")
+//     const [password, setPassword] = useState("")
+
+//     const [login] = useLoginMutation();
+//     const [googleLogin] = useGoogleLoginMutation();
+
+
+//     const handleSubmit = async (e: React.FormEvent) => {
+//         e.preventDefault()
+//         setLoading(true)
+//         try {
+//             const res = await login({ email, password }).unwrap();
+//             // console.log(res?.data?.tokens?.access)
+//             toast.success(res?.message || "Login successful!")
+//             localStorage.setItem("accessToken", res?.data?.tokens?.access)
+//             setLoading(false)
+//             // router.push("/")
+//             // switchView("/")
+//             window.location.href = "/";
+//         } catch (error: any) {
+//             toast.error(error?.data?.errors?.email?.[0] || error?.data?.errors?.password?.[0] || error?.data?.message || "Login failed. Please check your credentials and try again.")
+//             setLoading(false)
+//         }
+//     }
+
+
+
+//     return (
+//         <div className="overflow-y-auto h-[70vh]">
+//             <GoogleOAuthProvider clientId="438230015346-f0nnhfn7pnkd04b00eq1f87ldolpue1s.apps.googleusercontent.com">
+//                 <div className="w-full max-w-md mx-auto ">
+//                     <div className="">
+
+
+//                         <form onSubmit={handleSubmit} className="space-y-3">
+//                             {/* Email Field */}
+//                             <div className="space-y-2">
+//                                 <Label htmlFor="email" className="text-lg font-semibold text-[#374151]">
+//                                     Email
+//                                 </Label>
+//                                 <div className="relative">
+//                                     <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#059669] h-5 w-5" />
+//                                     <Input
+//                                         id="email"
+//                                         type="email"
+//                                         placeholder="Enter your email"
+//                                         value={email}
+//                                         onChange={(e) => setEmail(e.target.value)}
+//                                         className="pl-12 h-14 bg-gray-50 border-[#9CA3AF] rounded-lg text-gray-700 placeholder:text-gray-400 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all duration-200"
+//                                         required
+//                                     />
+//                                 </div>
+//                             </div>
+
+//                             {/* Password Field */}
+//                             <div className="space-y-2">
+//                                 <Label htmlFor="password" className="text-lg font-semibold text-[#374151]">
+//                                     Password
+//                                 </Label>
+//                                 <div className="relative">
+//                                     <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#059669] h-5 w-5" />
+//                                     <Input
+//                                         id="password"
+//                                         type={showPassword ? "text" : "password"}
+//                                         placeholder="Enter your password"
+//                                         value={password}
+//                                         onChange={(e) => setPassword(e.target.value)}
+//                                         className="pl-12 pr-12 h-14 bg-gray-50 border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all duration-200"
+//                                         required
+//                                     />
+//                                     <button
+//                                         type="button"
+//                                         onClick={() => setShowPassword(!showPassword)}
+//                                         className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+//                                     >
+//                                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+//                                     </button>
+//                                 </div>
+//                             </div>
+
+//                             {/* Forgot Password Link */}
+//                             <div className="text-right">
+//                                 <button
+//                                     type="button"
+//                                     className="text-sm font-semibold cursor-pointer text-emerald-600 hover:text-emerald-700  transition-colors"
+//                                     onClick={() => switchView("forgot")}
+//                                 >
+//                                     Forget password?
+//                                 </button>
+//                             </div>
+
+//                             {/* Sign In Button */}
+//                             <Button
+//                                 type="submit"
+//                                 disabled={loading}
+//                                 className="w-full h-14 bg-[#059669] cursor-pointer text-[18px] font-semibold hover:bg-emerald-700 text-white  rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+//                             >
+//                                 {loading ? "Signing In..." : "Sign In"}
+//                             </Button>
+
+//                             {/* <AppleLogin clientId="4545454534354354" redirectURI="https://redirectUrl.com" /> */}
+
+
+//                             {/* Divider */}
+//                             <div className="relative my-6">
+//                                 <div className="absolute inset-0 flex items-center">
+//                                     <div className="w-full border-t border-gray-200"></div>
+//                                 </div>
+//                                 <div className="relative flex justify-center text-sm">
+//                                     <span className="px-4 bg-white text-gray-500 font-medium">Or</span>
+//                                 </div>
+//                             </div>
+
+//                             {/* Social Login Buttons */}
+//                             <div className="space-y-2">
+
+//                                 <GoogleLogin
+//                                     onSuccess={credentialResponse => async () => {
+
+//                                         const res = await googleLogin({ id_token: credentialResponse?.credential }).unwrap();
+//                                         console.log(res,'res')
+//                                         console.log(credentialResponse);
+//                                     }}
+//                                     onError={() => {
+//                                         console.log('Login Failed');
+//                                     }}
+//                                 />;
+
+//                                 <Button
+//                                     type="button"
+//                                     variant="outline"
+//                                     className="w-full h-14 bg-[#D1FAE5] hover:bg-emerald-100 border-emerald-200  rounded-lg cursor-pointer text-[18px] text-[#047857] font-semibold transition-all duration-200 flex items-center justify-center gap-3"
+//                                 >
+//                                     <Apple />
+//                                     Sign In with Apple
+//                                 </Button>
+
+//                                 <Button
+//                                     type="button"
+//                                     variant="outline"
+//                                     className="w-full h-14 bg-[#D1FAE5] hover:bg-emerald-100 border-emerald-200  rounded-lg cursor-pointer text-[18px] text-[#047857] font-semibold transition-all duration-200 flex items-center justify-center gap-3"
+//                                 >
+//                                     <Google />
+//                                     Sign In with Google
+//                                 </Button>
+
+//                                 <Button
+//                                     type="button"
+//                                     variant="outline"
+//                                     className="w-full h-14 bg-[#D1FAE5] hover:bg-emerald-100 border-emerald-200  rounded-lg cursor-pointer text-[18px] text-[#047857] font-semibold transition-all duration-200 flex items-center justify-center gap-3"
+//                                 >
+//                                     <Microsoft />
+//                                     Sign In with Microsoft
+//                                 </Button>
+//                             </div>
+
+//                             {/* Sign Up Link */}
+//                             <div className="text-center mt-8">
+//                                 <span className="text-gray-600 text-sm">
+//                                     Don't have an account?{" "}
+//                                     <button onClick={() => switchView("signup")} type="button" className="text-emerald-600 hover:text-emerald-700 cursor-pointer font-semibold transition-colors">
+//                                         Sign Up
+//                                     </button>
+//                                 </span>
+//                             </div>
+//                         </form>
+//                     </div>
+//                 </div>
+//             </GoogleOAuthProvider>
+//             {/* <div className="flex justify-between text-sm text-blue-600">
+//         <button onClick={() => switchView("signup")}>Create Account</button>
+//         <button onClick={() => switchView("forgot")}>Forgot Password?</button>
+//       </div> */}
+//         </div>
+//     );
+// }
 'use client';
 
 import { useState } from "react";
@@ -8,105 +206,148 @@ import { Button } from "../ui/button";
 import Apple from "../icon/apple";
 import Microsoft from "../icon/microsoft";
 import Google from "../icon/google";
-import { useLoginMutation } from "@/redux/feature/authSlice";
+import { useGoogleLoginMutation, useLoginMutation } from "@/redux/feature/authSlice";
 import { toast } from "sonner";
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useRouter } from "next/navigation";
+import MicrosoftLogin from "react-microsoft-login";
+
 
 type AuthView = "login" | "signup" | "forgot" | '/';
 
 export default function Login({ switchView }: { switchView: (v: AuthView) => void }) {
+    const router = useRouter();
 
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const [login] = useLoginMutation()
+    const [login] = useLoginMutation();
+    const [googleLogin] = useGoogleLoginMutation();
 
+    // --------------------------
+    // Email/Password Login
+    // --------------------------
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         try {
             const res = await login({ email, password }).unwrap();
-            // console.log(res?.data?.tokens?.access)
+
             toast.success(res?.message || "Login successful!")
             localStorage.setItem("accessToken", res?.data?.tokens?.access)
             setLoading(false)
-            // router.push("/")
-            // switchView("/")
-            window.location.href = "/";
+
+            // window.location.href = "/";
+            router.push("/")
         } catch (error: any) {
-            toast.error(error?.data?.errors?.email?.[0] || error?.data?.errors?.password?.[0] || error?.data?.message || "Login failed. Please check your credentials and try again.")
+            toast.error(
+                error?.data?.errors?.email?.[0] ||
+                error?.data?.errors?.password?.[0] ||
+                error?.data?.message ||
+                "Login failed. Please check your credentials and try again."
+            );
             setLoading(false)
         }
     }
+
+    // --------------------------
+    // Google Login
+    // --------------------------
+    const handleGoogleSuccess = async (credentialResponse: any) => {
+        console.log(credentialResponse, 'google resposne')
+        try {
+            const res = await googleLogin({
+                id_token: credentialResponse?.credential,
+            }).unwrap();
+            console.log(res?.data?.tokens?.access, 'api hight ===============>')
+
+            toast.success(res?.message || "Google Login Successful!");
+
+            localStorage.setItem("accessToken", res?.data?.tokens?.access);
+
+            router.push("/");
+        } catch (err: any) {
+            console.log(err)
+            toast.error(err?.data?.message || "Google Login Failed!");
+        }
+    };
+
+    // --------------------------
+    // Microsoft Login
+    // --------------------------
+    const authHandler = (err: any, data: any) => {
+        console.log(err, data);
+    };
     return (
         <div className="overflow-y-auto h-[70vh]">
-            <div className="w-full max-w-md mx-auto ">
-                <div className="">
+            <GoogleOAuthProvider clientId="438230015346-f0nnhfn7pnkd04b00eq1f87ldolpue1s.apps.googleusercontent.com">
 
-
+                <div className="w-full max-w-md mx-auto">
                     <form onSubmit={handleSubmit} className="space-y-3">
-                        {/* Email Field */}
+
+                        {/* Email */}
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-lg font-semibold text-[#374151]">
                                 Email
                             </Label>
                             <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#059669] h-5 w-5" />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-[#059669] h-5 w-5" />
                                 <Input
                                     id="email"
                                     type="email"
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="pl-12 h-14 bg-gray-50 border-[#9CA3AF] rounded-lg text-gray-700 placeholder:text-gray-400 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all duration-200"
+                                    className="pl-12 h-14 bg-gray-50 border-[#9CA3AF] rounded-lg text-gray-700 placeholder:text-gray-400 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all"
                                     required
                                 />
                             </div>
                         </div>
 
-                        {/* Password Field */}
+                        {/* Password */}
                         <div className="space-y-2">
                             <Label htmlFor="password" className="text-lg font-semibold text-[#374151]">
                                 Password
                             </Label>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#059669] h-5 w-5" />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-[#059669] h-5 w-5" />
                                 <Input
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="pl-12 pr-12 h-14 bg-gray-50 border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all duration-200"
+                                    className="pl-12 pr-12 h-14 bg-gray-50 border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all"
                                     required
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                 >
-                                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    {showPassword ? <EyeOff /> : <Eye />}
                                 </button>
                             </div>
                         </div>
 
-                        {/* Forgot Password Link */}
+                        {/* Forgot Password */}
                         <div className="text-right">
                             <button
                                 type="button"
-                                className="text-sm font-semibold cursor-pointer text-emerald-600 hover:text-emerald-700  transition-colors"
+                                className="text-sm font-semibold text-emerald-600 hover:text-emerald-700"
                                 onClick={() => switchView("forgot")}
                             >
                                 Forget password?
                             </button>
                         </div>
 
-                        {/* Sign In Button */}
+                        {/* Sign In */}
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full h-14 bg-[#059669] cursor-pointer text-[18px] font-semibold hover:bg-emerald-700 text-white  rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                            className="w-full h-14 bg-[#059669] text-[18px] font-semibold hover:bg-emerald-700 text-white rounded-xl shadow-lg"
                         >
                             {loading ? "Signing In..." : "Sign In"}
                         </Button>
@@ -121,53 +362,32 @@ export default function Login({ switchView }: { switchView: (v: AuthView) => voi
                             </div>
                         </div>
 
-                        {/* Social Login Buttons */}
-                        <div className="space-y-2">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                className="w-full h-14 bg-[#D1FAE5] hover:bg-emerald-100 border-emerald-200  rounded-lg cursor-pointer text-[18px] text-[#047857] font-semibold transition-all duration-200 flex items-center justify-center gap-3"
-                            >
-                                <Apple />
-                                Sign In with Apple
-                            </Button>
+                        {/* GOOGLE LOGIN FIXED */}
+                        <div className="flex justify-center">
+                            <GoogleLogin
+                                onSuccess={handleGoogleSuccess}
+                                onError={() => toast.error("Google Login Failed")}
+                            />
+                            {/* <MicrosoftLogin clientId={"438230015346-f0nnhfn7pnkd04b00eq1f87ldolpue1s.apps.googleusercontent.com"} authCallback={authHandler} /> */}
 
-                            <Button
-                                type="button"
-                                variant="outline"
-                                className="w-full h-14 bg-[#D1FAE5] hover:bg-emerald-100 border-emerald-200  rounded-lg cursor-pointer text-[18px] text-[#047857] font-semibold transition-all duration-200 flex items-center justify-center gap-3"
-                            >
-                                <Google />
-                                Sign In with Google
-                            </Button>
-
-                            <Button
-                                type="button"
-                                variant="outline"
-                                className="w-full h-14 bg-[#D1FAE5] hover:bg-emerald-100 border-emerald-200  rounded-lg cursor-pointer text-[18px] text-[#047857] font-semibold transition-all duration-200 flex items-center justify-center gap-3"
-                            >
-                                <Microsoft />
-                                Sign In with Microsoft
-                            </Button>
                         </div>
 
-                        {/* Sign Up Link */}
+                        {/* Sign Up */}
                         <div className="text-center mt-8">
                             <span className="text-gray-600 text-sm">
                                 Don't have an account?{" "}
-                                <button onClick={() => switchView("signup")} type="button" className="text-emerald-600 hover:text-emerald-700 cursor-pointer font-semibold transition-colors">
+                                <button
+                                    onClick={() => switchView("signup")}
+                                    className="text-emerald-600 hover:text-emerald-700 font-semibold"
+                                >
                                     Sign Up
                                 </button>
                             </span>
                         </div>
+
                     </form>
                 </div>
-            </div>
-
-            {/* <div className="flex justify-between text-sm text-blue-600">
-        <button onClick={() => switchView("signup")}>Create Account</button>
-        <button onClick={() => switchView("forgot")}>Forgot Password?</button>
-      </div> */}
+            </GoogleOAuthProvider>
         </div>
     );
 }

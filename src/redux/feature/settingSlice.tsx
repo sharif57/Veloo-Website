@@ -6,12 +6,18 @@ const settingSlice = baseApi.injectEndpoints({
     // -------- Terms and Conditions --------
     getTermsAndConditions: builder.query({
       query: () => ({
-        url: `/discipline/terms-conditions/`,
+        url: `/privacy/terms-conditions/`,
         method: "GET",
       }),
       providesTags: ["Settings"],
     }),
-
+    getAboutUs: builder.query({
+      query: () => ({
+        url: `/privacy/about-us/`,
+        method: "GET",
+      }),
+      providesTags: ["Settings"],
+    }),
     // -------- Privacy Policy --------
     getPrivacyPolicy: builder.query({
       query: () => ({
@@ -35,6 +41,7 @@ const settingSlice = baseApi.injectEndpoints({
 
 export const {
   useGetTermsAndConditionsQuery,
+  useGetAboutUsQuery,
   useGetPrivacyPolicyQuery,
   useGetTrustAndSafetyQuery,
 } = settingSlice;

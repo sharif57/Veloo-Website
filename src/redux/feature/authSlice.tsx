@@ -73,9 +73,19 @@ export const authApi = baseApi.injectEndpoints({
       },
     }),
 
+    updatePassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/account/reset-password/",
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+
     googleLogin: builder.mutation({
       query: ({ id_token }) => ({
-        url: "/auth/googleLogin/",
+        url: "/account/social/google/",
         method: "POST",
         body: { id_token: id_token },
       }),
@@ -106,6 +116,7 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useChangePasswordMutation,
+  useUpdatePasswordMutation,
   useForgotPasswordMutation,
   useVerifyEmailMutation,
   useForgotVerifyOtpMutation,
